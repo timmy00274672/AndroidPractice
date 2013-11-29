@@ -8,4 +8,13 @@
 	<string name="hintText">please enter 140 characters ^>^ </string>
 	<string name = "buttonUpdate">Update</string>
 	<string name="initialCount">000</string>
+	<string name="sumeraryApiRoot">url of root api for your service</string>
+	<string name ="summaryUsername">please enter your user name</string>
+	<string name="summaryPassword">please enter your password</string>
+	<string name="titleApiRoot">api root</string>
+	<string name="titlePassword">password</string>
+	<string name="titleUsername">username</string>
+	<string name='titlePrefs'>Prefs</string>
+	
+	<string name="defaultApiRoot">http://yamba.marakana.com/api</string>
 </resources>
