@@ -4,12 +4,9 @@ import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -30,12 +27,11 @@ import android.widget.Toast;
  * href=
  * "http://stackoverflow.com/questions/2542938/sharedpreferences-onsharedpreferencechangelistener-not-being-called-consistently/3104265#3104265"
  * > reference</a>
- * 	
+ * 
  * @author Tim
  * 
  */
-public class StatusActivity extends Activity implements
-		OnSharedPreferenceChangeListener {
+public class StatusActivity extends Activity {
 	/**
 	 * The limit of characters to the status.
 	 */
@@ -43,15 +39,15 @@ public class StatusActivity extends Activity implements
 	EditText editText;
 	TextView textCount;
 	Button updateButton;
-	Twitter twitter;
-	SharedPreferences prefs;
 
 	/**
 	 * details:
 	 * <ul>
-	 * <li>confirms that characters in {@link #editText} less than or equal to {@link #LIMIT}</li>
-	 * <li> if values in {@link #prefs} changed, {@link #twitter} need to be updated.</li>
-	 * <li> implements the function of {@link #updateButton}</li>
+	 * <li>confirms that characters in {@link #editText} less than or equal to
+	 * {@link #LIMIT}</li>
+	 * <li>if values in {@link #prefs} changed, {@link #twitter} need to be
+	 * updated.</li>
+	 * <li>implements the function of {@link #updateButton}</li>
 	 * </ul>
 	 * 
 	 */
@@ -116,9 +112,6 @@ public class StatusActivity extends Activity implements
 			}
 		});
 
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		prefs.registerOnSharedPreferenceChangeListener(this);
-
 	}
 
 	@Override
@@ -130,23 +123,26 @@ public class StatusActivity extends Activity implements
 	}
 
 	/**
-	 * 	Two method to deal with connecting 
-	 * 	<ul>
-	 * 		<li>use the same thread (main thread) to connect</li>
-	 * 		<li> use asynchronous method </li>
-	 * 	</ul>
-	 * 	Newer version <b>prevents </b> the first one, because it may seriously delay the main thread. 
-	 *		Such that android provides {@link  android.os.AsyncTask<String, Integer, String>} 
-	 *		</br>
-	 *		note:
-	 * 	<ul>
-	 * 		<li>each generic type is for each method in this abstract class</li>
-	 * 		<li>The return object of {@link #doInBackground(String...)} is passed to  {@link #onPostExecute(String)}</li>
-	 * 		<li> If we need to update something depending on what we have done, we use the method {@link #onProgressUpdate(Integer...)} in  {@link #doInBackground(String...)}
-	 * 				For example, we need to show status bar, or  installation details </li> 
-	 * 	</ul>
+	 * Two method to deal with connecting
+	 * <ul>
+	 * <li>use the same thread (main thread) to connect</li>
+	 * <li>use asynchronous method</li>
+	 * </ul>
+	 * Newer version <b>prevents </b> the first one, because it may seriously
+	 * delay the main thread. Such that android provides
+	 * {@link android.os.AsyncTask<String, Integer, String>} </br> note:
+	 * <ul>
+	 * <li>each generic type is for each method in this abstract class</li>
+	 * <li>The return object of {@link #doInBackground(String...)} is passed to
+	 * {@link #onPostExecute(String)}</li>
+	 * <li>If we need to update something depending on what we have done, we use
+	 * the method {@link #onProgressUpdate(Integer...)} in
+	 * {@link #doInBackground(String...)} For example, we need to show status
+	 * bar, or installation details</li>
+	 * </ul>
+	 * 
 	 * @author Tim
-	 *
+	 * 
 	 */
 	class PostToTwitter extends AsyncTask<String, Integer, String> {
 
@@ -154,7 +150,8 @@ public class StatusActivity extends Activity implements
 		@Override
 		protected String doInBackground(String... statuses) {
 			try {
-				Twitter.Status status = getTwitter().updateStatus(statuses[0]);
+				Twitter.Status status = ((YambaApplication) getApplication())
+						.getTwitter().updateStatus(statuses[0]);
 				return status.text;
 			} catch (TwitterException e) {
 				Log.e(StatusActivity.class.getName(), e.toString());
@@ -191,8 +188,11 @@ public class StatusActivity extends Activity implements
 	/**
 	 * Key points:
 	 * <ul>
-	 * 	<li>Use intent to call other activity, with {@link #StatusActivity()}</li> 
-	 * </ul>	
+	 * <li>Use intent to call other activity, with {@link #StatusActivity()}</li>
+	 * <li>here we use {@link #startActivity}, {@link #startService} ,
+	 * {@link #stopService} to control service and connecting other activities
+	 * </ul>
+	 * 
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
 	 */
 	@Override
@@ -201,35 +201,14 @@ public class StatusActivity extends Activity implements
 		case R.id.itemPrefs:
 			startActivity(new Intent(this, PrefsActivity.class));
 			break;
+		case R.id.itemServiceStart:
+			startService(new Intent(this, UpdaterService.class));
+			break;
+		case R.id.itemServiceStop:
+			stopService(new Intent(this, UpdaterService.class));
+			break;
 		}
 		return true;
 	}
 
-	private Twitter getTwitter() {
-
-		if (twitter == null) {
-			String username, password, apiRoot;
-			username = prefs.getString("username", "");
-			password = prefs.getString("password", "");
-			apiRoot = prefs.getString("aipRoot",
-					getString(R.string.defaultApiRoot));
-			twitter = new Twitter(username, password);
-			twitter.setAPIRootUrl(apiRoot);
-			Log.d("in getTwitter", twitter.getScreenName() + "/" + password
-					+ "/" + apiRoot);
-		}
-		return twitter;
-
-	}
-
-	/**
-	 * 	
-	 */
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
-		twitter = null;
-		Log.d("in onSharedPreferenceChange", (twitter == null) ? "null"
-				: "not null");
-
-	}
 }

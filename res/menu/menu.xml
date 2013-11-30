@@ -6,4 +6,11 @@
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/titlePrefs"/>
 
+    <item android:id="@+id/itemServiceStart"
+        android:icon="@android:drawable/ic_media_play" 
+        android:title="@string/titleServiceStart"/>
+    
+    <item android:id="@+id/itemServiceStop"
+        android:icon="@android:drawable/ic_media_pause" 
+        android:title="@string/titleServiceStop"/>
 </menu>
