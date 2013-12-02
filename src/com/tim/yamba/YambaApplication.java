@@ -28,6 +28,7 @@ public class YambaApplication extends Application implements
 	 * Connect to apiRoot value in {@link #prefs}
 	 */
 	private Twitter twitter;
+	private StatusData statusData;
 
 	/**
 	 * Initialize {@link #prefs}
@@ -40,6 +41,7 @@ public class YambaApplication extends Application implements
 		super.onCreate();
 		this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		this.prefs.registerOnSharedPreferenceChangeListener(this);
+		this.statusData = new StatusData(this);
 	}
 
 	/**
@@ -93,4 +95,9 @@ public class YambaApplication extends Application implements
 		return this.runBoolean;
 
 	}
+	
+	public StatusData getStatusData(){
+		return statusData;
+	}
+	
 }

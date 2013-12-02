@@ -7,16 +7,13 @@ import winterwell.jtwitter.TwitterException;
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.IBinder;
 import android.util.Log;
 
 public class UpdaterService extends Service {
+	private StatusData statusData;
 	private Updater updater;
 	private YambaApplication application;
-	private DbHelper dbHelper;
-	private SQLiteDatabase db;
 	private static final String TAG = UpdaterService.class.getName();
 	/**
 	 * delay of {@link #updater}
@@ -39,10 +36,7 @@ public class UpdaterService extends Service {
 		super.onCreate();
 		updater = new Updater();
 		application = (YambaApplication) getApplication();
-		Log.d(TAG, "before new dbHelper");
-		dbHelper = new DbHelper(this);
-		Log.d(TAG,"success");
-
+		statusData =  application.getStatusData();
 	}
 
 	/*
@@ -92,35 +86,33 @@ public class UpdaterService extends Service {
 			List<Status> timeline = null;
 			while (application.getUpdaterServiceRunning()) {
 				try {
-					db = dbHelper.getWritableDatabase();
+
 					ContentValues values = new ContentValues();
 
 					timeline = application.getTwitter().getFriendsTimeline();
 					for (Status status : timeline) {
-			            // Insert into database
-			            values.clear(); // <7>
-			            values.put(DbHelper.C_ID, status.id);
-			            values.put(DbHelper.C_CREATED_AT, status.createdAt.getTime());
-			            values.put(DbHelper.C_SOURCE, status.source);
-			            values.put(DbHelper.C_TEXT, status.text);
-			            values.put(DbHelper.C_USER, status.user.name);
-			            db.insertOrThrow(DbHelper.TABLE, null, values); // <8>
-
-			            Log.d(TAG, String.format("%s: %s", status.user.name, status.text));
+						// Insert into database
+						values.clear(); // <7>
+						values.put(StatusData.C_ID, status.id);
+						values.put(StatusData.C_CREATED_AT,
+								status.createdAt.getTime());
+						values.put(StatusData.C_SOURCE, status.source);
+						values.put(StatusData.C_TEXT, status.text);
+						values.put(StatusData.C_USER, status.user.name);
+						// db.insertOrThrow(DbHelper.TABLE, null, values); //
+						// <8>
+						statusData.insertOrIgnore(values);
+						Log.d(TAG, String.format("%s: %s", status.user.name,
+								status.text));
 
 					}
 
 					sleep(DELAY);
 				} catch (TwitterException e) {
-//					e.printStackTrace();
+					// e.printStackTrace();
 				} catch (InterruptedException e) {
-//					e.printStackTrace();
+					// e.printStackTrace();
 					application.setUpdaterServiceRunning(false);
-				} catch (SQLiteException e) {
-					Log.d(TAG, "create db fail");
-//					e.printStackTrace();
-				} finally {
-					db.close();
 				}
 			}
 		}

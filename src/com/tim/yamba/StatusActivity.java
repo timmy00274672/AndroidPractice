@@ -207,6 +207,9 @@ public class StatusActivity extends Activity {
 		case R.id.itemServiceStop:
 			stopService(new Intent(this, UpdaterService.class));
 			break;
+		case R.id.debug:
+			startService(new Intent(this,DebugMain.class));
+			stopService(new Intent(this,DebugMain.class));
 		}
 		return true;
 	}

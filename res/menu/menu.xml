@@ -13,4 +13,8 @@
     <item android:id="@+id/itemServiceStop"
         android:icon="@android:drawable/ic_media_pause" 
         android:title="@string/titleServiceStop"/>
+    
+    <item android:id="@+id/debug"
+        android:icon="@android:drawable/ic_dialog_alert" 
+        android:title="debug"/>
 </menu>
