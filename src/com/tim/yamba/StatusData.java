@@ -31,6 +31,13 @@ public class StatusData {
 	final static String C_TEXT = "txt";
 	final static String C_SOURCE = "source";
 
+	/**
+	 * We can use it to get db like 
+	 * <ul>
+	 * <li>{@link android.database.sqlite.SQLiteOpenHelper#getReadableDatabase()} </li>
+	 * <li>{@link android.database.sqlite.SQLiteOpenHelper#getWritableDatabase()}</li>
+	 * </ul>
+	 */
 	private final DbHelper dbHelper;
 
 	class DbHelper extends SQLiteOpenHelper {
@@ -148,7 +155,8 @@ public class StatusData {
 
 	/**
 	 * 
-	 * @return the timestamp of latest status, or {@link java.lang.Long#MIN_VALUE} if no latest status.
+	 * @return the timestamp of latest status, or
+	 *         {@link java.lang.Long#MIN_VALUE} if no latest status.
 	 */
 	public long getLatestStatusCreatedTime() {
 		SQLiteDatabase db = null;
@@ -157,10 +165,12 @@ public class StatusData {
 		try {
 
 			db = dbHelper.getReadableDatabase();
-			String query = String.format("SELECT MAX (%s) from %s", C_CREATED_AT,TABLE);
-			Log.d(TAG,"query = "+ query);
+			String query = String.format("SELECT MAX (%s) from %s",
+					C_CREATED_AT, TABLE);
+			Log.d(TAG, "query = " + query);
 			tempCursor = db.rawQuery(query, null);
-			result = tempCursor.moveToNext()?tempCursor.getLong(0):Long.MIN_VALUE;
+			result = tempCursor.moveToNext() ? tempCursor.getLong(0)
+					: Long.MIN_VALUE;
 		} catch (SQLException e) {
 			// ignore
 			Log.d(TAG, "in getLatestStatusCreatedTime() SQLException");
@@ -168,7 +178,7 @@ public class StatusData {
 			db.close();
 		}
 		return result;
-		
+
 	}
 
 	/**
@@ -180,15 +190,16 @@ public class StatusData {
 	@SuppressLint("DefaultLocale")
 	public String getStatusTextById(long id) {
 		SQLiteDatabase db = null;
-		String  result = null;
+		String result = null;
 		Cursor tempCursor;
 		try {
 
 			db = dbHelper.getReadableDatabase();
-			String query = String.format("SELECT %s FROM %s WHERE %s = %d", C_TEXT,TABLE,C_ID,id);
-			Log.d(TAG,"query = "+ query);
+			String query = String.format("SELECT %s FROM %s WHERE %s = %d",
+					C_TEXT, TABLE, C_ID, id);
+			Log.d(TAG, "query = " + query);
 			tempCursor = db.rawQuery(query, null);
-			result = tempCursor.moveToNext()?tempCursor.getString(0):null;
+			result = tempCursor.moveToNext() ? tempCursor.getString(0) : null;
 		} catch (SQLException e) {
 			// ignore
 			Log.d(TAG, "in getLatestStatusCreatedTime() SQLException");
@@ -197,4 +208,13 @@ public class StatusData {
 		}
 		return result;
 	}
+
+	/**
+	 * @return the dbHelper
+	 */
+	public DbHelper getDbHelper() {
+		return dbHelper;
+	}
+
+
 }

@@ -36,7 +36,7 @@ public class UpdaterService extends Service {
 		super.onCreate();
 		updater = new Updater();
 		application = (YambaApplication) getApplication();
-		statusData =  application.getStatusData();
+		statusData = application.getStatusData();
 	}
 
 	/*
@@ -86,30 +86,8 @@ public class UpdaterService extends Service {
 			List<Status> timeline = null;
 			while (application.getUpdaterServiceRunning()) {
 				try {
-
-					ContentValues values = new ContentValues();
-
-					timeline = application.getTwitter().getFriendsTimeline();
-					for (Status status : timeline) {
-						// Insert into database
-						values.clear(); // <7>
-						values.put(StatusData.C_ID, status.id);
-						values.put(StatusData.C_CREATED_AT,
-								status.createdAt.getTime());
-						values.put(StatusData.C_SOURCE, status.source);
-						values.put(StatusData.C_TEXT, status.text);
-						values.put(StatusData.C_USER, status.user.name);
-						// db.insertOrThrow(DbHelper.TABLE, null, values); //
-						// <8>
-						statusData.insertOrIgnore(values);
-						Log.d(TAG, String.format("%s: %s", status.user.name,
-								status.text));
-
-					}
-
+					application.fetchStatusUpdates();
 					sleep(DELAY);
-				} catch (TwitterException e) {
-					// e.printStackTrace();
 				} catch (InterruptedException e) {
 					// e.printStackTrace();
 					application.setUpdaterServiceRunning(false);

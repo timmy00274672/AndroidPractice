@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".YambaApplication"
+        android:name="com.tim.yamba.YambaApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -19,18 +19,28 @@
         <activity
             android:name="com.tim.yamba.StatusActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--This sets the activity as default window
+	            <intent-filter>
+	                <action android:name="android.intent.action.MAIN" />
+	                <category android:name="android.intent.category.LAUNCHER" />
+	            </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.tim.yamba.PrefsActivity"
             android:label="@string/titlePrefs" >
         </activity>
-        
+
         <service android:name="com.tim.yamba.UpdaterService" />
+
+        <activity
+            android:name="com.tim.yamba.TimelineActivity"
+            android:label="@string/titleTimeline" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

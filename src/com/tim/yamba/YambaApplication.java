@@ -1,7 +1,12 @@
 package com.tim.yamba;
 
+import java.util.List;
+
 import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.Twitter.Status;
 import android.app.Application;
+import android.app.Service;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
@@ -16,6 +21,7 @@ import android.util.Log;
  */
 public class YambaApplication extends Application implements
 		OnSharedPreferenceChangeListener {
+	private static final String TAG = YambaApplication.class.getName();
 	/**
 	 * Indicate whether {@link UpdaterService} is running.
 	 */
@@ -95,9 +101,48 @@ public class YambaApplication extends Application implements
 		return this.runBoolean;
 
 	}
-	
-	public StatusData getStatusData(){
+
+	public StatusData getStatusData() {
 		return statusData;
 	}
-	
+
+	/**
+	 * fetch new timeline status into database (via {@link StatusData#dbHelper})
+	 * We have to put the method here instead of {@link #statusData} because we
+	 * need {@link #twitter} object (We cannot use
+	 * {@link Service#getApplication()} in {@link #statusData} because it does
+	 * not extends )
+	 * 
+	 * @return the numbers of new statuses stored into database
+	 */
+	public synchronized int fetchStatusUpdates() {
+		List<Status> statusList = getTwitter().getFriendsTimeline();
+		ContentValues values = new ContentValues();
+		int count = 0;
+		final long lastTime = getStatusData().getLatestStatusCreatedTime();
+		for (Status status : statusList) {
+			try{
+				// Insert into database
+				values.clear(); // <7>
+				values.put(StatusData.C_ID, status.id);
+				long createdAt = status.createdAt.getTime();
+				values.put(StatusData.C_CREATED_AT, createdAt);
+				values.put(StatusData.C_SOURCE, status.source);
+				values.put(StatusData.C_TEXT, status.text);
+				values.put(StatusData.C_USER, status.user.name);
+				// db.insertOrThrow(DbHelper.TABLE, null, values); //
+				// <8>
+				statusData.insertOrIgnore(values);
+				Log.d(YambaApplication.TAG,
+						String.format("%s: %s", status.user.name, status.text));
+				if(createdAt > lastTime)
+					count++;
+			}catch(RuntimeException e){
+				Log.e(TAG, e.toString());
+			}
+
+		}
+		return count;
+	}
+
 }
