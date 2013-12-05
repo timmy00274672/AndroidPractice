@@ -16,5 +16,5 @@
     
     <item android:id="@+id/debug"
         android:icon="@android:drawable/ic_dialog_alert" 
-        android:title="debug"/>
+        android:title="@string/debug"/>
 </menu>

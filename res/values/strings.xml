@@ -19,4 +19,5 @@
     <string name="titleServiceStop">Stop</string>
     <string name="defaultApiRoot">http://yamba.marakana.com/api</string>
 	<string name="titleTimeline">Timeline</string>
+	<string name="debug">debug</string>
 </resources>

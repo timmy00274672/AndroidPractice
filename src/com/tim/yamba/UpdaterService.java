@@ -1,17 +1,11 @@
 package com.tim.yamba;
 
-import java.util.List;
-
-import winterwell.jtwitter.Twitter.Status;
-import winterwell.jtwitter.TwitterException;
 import android.app.Service;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
 public class UpdaterService extends Service {
-	private StatusData statusData;
 	private Updater updater;
 	private YambaApplication application;
 	private static final String TAG = UpdaterService.class.getName();
@@ -36,7 +30,6 @@ public class UpdaterService extends Service {
 		super.onCreate();
 		updater = new Updater();
 		application = (YambaApplication) getApplication();
-		statusData = application.getStatusData();
 	}
 
 	/*
@@ -83,7 +76,6 @@ public class UpdaterService extends Service {
 		 */
 		@Override
 		public void run() {
-			List<Status> timeline = null;
 			while (application.getUpdaterServiceRunning()) {
 				try {
 					application.fetchStatusUpdates();
