@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
+    <item 
+        android:id="@+id/itemStatus"
+        android:title="@string/titleStatus"
+        android:icon="@android:drawable/ic_menu_edit"
+        
+        />
+    <item 
+        android:id="@+id/itemTimeline"
+        android:title="@string/titleTimeline"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        
+        />
+    <item 
         android:id="@+id/itemPrefs"
+        android:title="@string/titlePrefs"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/titlePrefs"/>
-
-    <item android:id="@+id/itemServiceStart"
-        android:icon="@android:drawable/ic_media_play" 
-        android:title="@string/titleServiceStart"/>
+        />
+    <item 
+        android:id="@+id/itemPurge"
+        android:title="@string/titlePurge"
+        android:icon="@android:drawable/ic_menu_preferences"
+        />
     
-    <item android:id="@+id/itemServiceStop"
-        android:icon="@android:drawable/ic_media_pause" 
-        android:title="@string/titleServiceStop"/>
+    <item 
+        android:id="@+id/itemToggle"
+        android:title="@string/titleServiceStart"
+        android:icon="@android:drawable/ic_media_play"
+        />
     
-    <item android:id="@+id/debug"
-        android:icon="@android:drawable/ic_dialog_alert" 
-        android:title="@string/debug"/>
 </menu>

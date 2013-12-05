@@ -32,10 +32,12 @@ public class StatusData {
 	final static String C_SOURCE = "source";
 
 	/**
-	 * We can use it to get db like 
+	 * We can use it to get db like
 	 * <ul>
-	 * <li>{@link android.database.sqlite.SQLiteOpenHelper#getReadableDatabase()} </li>
-	 * <li>{@link android.database.sqlite.SQLiteOpenHelper#getWritableDatabase()}</li>
+	 * <li>
+	 * {@link android.database.sqlite.SQLiteOpenHelper#getReadableDatabase()}</li>
+	 * <li>
+	 * {@link android.database.sqlite.SQLiteOpenHelper#getWritableDatabase()}</li>
 	 * </ul>
 	 */
 	private final DbHelper dbHelper;
@@ -216,5 +218,21 @@ public class StatusData {
 		return dbHelper;
 	}
 
+	/**
+	 * delete but not drop database
+	 */
+	public void delete() {
+		// Open Database
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+		try {
+			// Delete the data
+			db.delete(TABLE, null, null);
+
+			// Close Database
+		} finally {
+			db.close();
+		}
+	}
 
 }

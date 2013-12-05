@@ -2,8 +2,6 @@ package com.tim.yamba;
 
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,7 +28,7 @@ import android.widget.Toast;
  * @author Tim
  * 
  */
-public class StatusActivity extends Activity {
+public class StatusActivity extends BaseActivity {
 	/**
 	 * The limit of characters to the status.
 	 */
@@ -185,33 +182,7 @@ public class StatusActivity extends Activity {
 
 	}
 
-	/**
-	 * Key points:
-	 * <ul>
-	 * <li>Use intent to call other activity, with {@link #StatusActivity()}</li>
-	 * <li>here we use {@link #startActivity}, {@link #startService} ,
-	 * {@link #stopService} to control service and connecting other activities
-	 * </ul>
-	 * 
-	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.itemPrefs:
-			startActivity(new Intent(this, PrefsActivity.class));
-			break;
-		case R.id.itemServiceStart:
-			startService(new Intent(this, UpdaterService.class));
-			break;
-		case R.id.itemServiceStop:
-			stopService(new Intent(this, UpdaterService.class));
-			break;
-		case R.id.debug:
-			startService(new Intent(this,DebugMain.class));
-			stopService(new Intent(this,DebugMain.class));
-		}
-		return true;
-	}
+
+	
 
 }

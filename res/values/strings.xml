@@ -20,4 +20,8 @@
     <string name="defaultApiRoot">http://yamba.marakana.com/api</string>
 	<string name="titleTimeline">Timeline</string>
 	<string name="debug">debug</string>
+	<string name="titlePurge">Purge</string>
+	<string name="msgAllDataPurge">all messages delete</string>
+	<string name="msgSetupPrefs">please setup account first</string>
+		
 </resources>

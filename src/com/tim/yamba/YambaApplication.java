@@ -145,4 +145,11 @@ public class YambaApplication extends Application implements
 		return count;
 	}
 
+	/**
+	 * @return the prefs
+	 */
+	public SharedPreferences getPrefs() {
+		return prefs;
+	}
+
 }

@@ -1,16 +1,17 @@
 package com.tim.yamba;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.SimpleCursorAdapter.ViewBinder;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * It's activity(window) to show the status
@@ -18,7 +19,8 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
  * @author Tim
  * 
  */
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends BaseActivity {
+	private static final String TAG = TimelineActivity.class.getName();
 	YambaApplication application;
 	private ListView listView;
 	private SQLiteDatabase db;
@@ -31,32 +33,25 @@ public class TimelineActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		application = (YambaApplication) getApplication();
 		setContentView(R.layout.timeline);
 		listView = (ListView) findViewById(R.id.listTimeline);
-		application = (YambaApplication) getApplication();
-		db = application.getStatusData().getDbHelper().getReadableDatabase();
+		if (application.getPrefs().getString("username", null) == null) {
+			startActivity(new Intent(this, PrefsActivity.class));
+			Toast.makeText(this, R.string.msgSetupPrefs, Toast.LENGTH_LONG)
+					.show();
+		}
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.timeline, menu);
-		return true;
-	}
-
-	/**
-	 * get data from the databas and set up the adatper
-	 * 
-	 * @see android.app.Activity#onResume()
-	 */
 	@SuppressWarnings("deprecation")
-	@Override
-	protected void onResume() {
-		super.onResume();
+	private void setupList() {
+		db = application.getStatusData().getDbHelper().getReadableDatabase();
 		Cursor cursor = db.query(StatusData.TABLE, null, null, null, null,
 				null, StatusData.C_CREATED_AT + " DESC");
-		startManagingCursor(cursor);
+		/*
+		 * it causes exception startManagingCursor(cursor);
+		 */
 		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, FROM, TO);
 		adapter.setViewBinder(new ViewBinder() {
 
@@ -78,4 +73,29 @@ public class TimelineActivity extends Activity {
 		listView.setAdapter(adapter);
 	}
 
+	/*
+	 * @Override public boolean onCreateOptionsMenu(Menu menu) { // Inflate the
+	 * menu; this adds items to the action bar if it is present.
+	 * getMenuInflater().inflate(R.menu.timeline, menu); return true; }
+	 */
+
+	/**
+	 * get data from the databas and set up the adatper
+	 * 
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		Log.d(TAG, "in onResume()");
+		super.onResume();
+		setupList();
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		db.close();
+	}
 }
