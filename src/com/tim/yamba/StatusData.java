@@ -150,7 +150,7 @@ public class StatusData {
 		} catch (SQLException e) {
 			// ignore
 		} finally {
-			db.close();
+//			db.close();
 		}
 		return result;
 	}
@@ -209,13 +209,6 @@ public class StatusData {
 			db.close();
 		}
 		return result;
-	}
-
-	/**
-	 * @return the dbHelper
-	 */
-	public DbHelper getDbHelper() {
-		return dbHelper;
 	}
 
 	/**

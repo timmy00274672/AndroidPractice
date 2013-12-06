@@ -2,8 +2,8 @@ package com.tim.yamba;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +21,7 @@ import android.widget.Toast;
  */
 public class TimelineActivity extends BaseActivity {
 	private static final String TAG = TimelineActivity.class.getName();
-	YambaApplication application;
 	private ListView listView;
-	private SQLiteDatabase db;
 	private static String[] FROM = { StatusData.C_CREATED_AT,
 			StatusData.C_USER, StatusData.C_TEXT };
 	private static int[] TO = { R.id.textCreatedAt, R.id.textUser,
@@ -33,7 +31,6 @@ public class TimelineActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		application = (YambaApplication) getApplication();
 		setContentView(R.layout.timeline);
 		listView = (ListView) findViewById(R.id.listTimeline);
 		if (application.getPrefs().getString("username", null) == null) {
@@ -44,15 +41,13 @@ public class TimelineActivity extends BaseActivity {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	private void setupList() {
-		db = application.getStatusData().getDbHelper().getReadableDatabase();
-		Cursor cursor = db.query(StatusData.TABLE, null, null, null, null,
-				null, StatusData.C_CREATED_AT + " DESC");
+		Cursor cursor = application.getStatusData().getStatusUpdates();
 		/*
 		 * it causes exception startManagingCursor(cursor);
 		 */
-		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, FROM, TO);
+		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, FROM, TO,
+				CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		adapter.setViewBinder(new ViewBinder() {
 
 			@Override
@@ -96,6 +91,6 @@ public class TimelineActivity extends BaseActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		db.close();
+		application.getStatusData().close();
 	}
 }
