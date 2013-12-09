@@ -29,6 +29,7 @@ import android.widget.Toast;
  * 
  */
 public class StatusActivity extends BaseActivity {
+	protected static final String TAG = StatusActivity.class.getName();
 	/**
 	 * The limit of characters to the status.
 	 */
@@ -62,6 +63,7 @@ public class StatusActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				String temp = editText.getText().toString();
+				Log.d(TAG,temp);
 				StatusActivity.this.new PostToTwitter().execute(temp);
 
 			}
@@ -85,8 +87,8 @@ public class StatusActivity extends BaseActivity {
 
 			@Override
 			public void afterTextChanged(Editable statusText) {
-				Log.d("in afterTextChanged input", statusText.toString());
-				Log.d("in afterTextChanged old", oldSequence.toString());
+//				Log.d("in afterTextChanged input", statusText.toString());
+//				Log.d("in afterTextChanged old", oldSequence.toString());
 				int count = StatusActivity.LIMIT - statusText.length();
 				textCount.setText(Integer.toString(count));
 
@@ -143,12 +145,16 @@ public class StatusActivity extends BaseActivity {
 	 */
 	class PostToTwitter extends AsyncTask<String, Integer, String> {
 
+		private final String TAG = PostToTwitter.class.getName();
+
 		//
 		@Override
 		protected String doInBackground(String... statuses) {
 			try {
+				Log.d(TAG,"in doInBackground before getTwitter");
 				Twitter.Status status = ((YambaApplication) getApplication())
 						.getTwitter().updateStatus(statuses[0]);
+				Log.d(TAG,statuses[0]);
 				return status.text;
 			} catch (TwitterException e) {
 				Log.e(StatusActivity.class.getName(), e.toString());

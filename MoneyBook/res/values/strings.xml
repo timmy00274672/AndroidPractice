@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="app_name">MoneyBook</string>
+
+    <string name="inputTime">Time</string>
+
+    <string name="inputAmount">$</string>
+
+    <string name="inputPs">PS</string>
+
+    <string name="tittleAddButton">Add</string>
+
+    <string name="tittleCancelButton">Cancel</string>
+
+    <string name="tittleShow">SHOW</string>
+
+</resources>
