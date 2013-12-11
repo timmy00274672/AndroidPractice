@@ -4,9 +4,13 @@ import java.util.List;
 
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
+import winterwell.jtwitter.TwitterException;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Service;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
@@ -88,19 +92,25 @@ public class YambaApplication extends Application implements
 
 	}
 
-	/**
-	 * Setter of {@link #runBoolean}
-	 * 
-	 * @param run
-	 */
-	public void setUpdaterServiceRunning(boolean run) {
-		this.runBoolean = run;
-	}
-
-	public boolean getUpdaterServiceRunning() {
-		return this.runBoolean;
-
-	}
+//	/**
+//	 * Setter of {@link #runBoolean}
+//	 * 
+//	 * @param run
+//	 */
+//	public void setUpdaterServiceRunning(boolean run) {
+//		this.runBoolean = run;
+//		if (run) {
+//			startService(new Intent(this, UpdaterService.class));
+//		} else {
+//			stopService(new Intent(this, UpdaterService.class));
+//		}
+//
+//	}
+//
+//	public boolean getUpdaterServiceRunning() {
+//		return this.runBoolean;
+//
+//	}
 
 	public StatusData getStatusData() {
 		return statusData;
@@ -116,12 +126,23 @@ public class YambaApplication extends Application implements
 	 * @return the numbers of new statuses stored into database
 	 */
 	public synchronized int fetchStatusUpdates() {
-		List<Status> statusList = getTwitter().getFriendsTimeline();
+		Log.d(TAG, "in fetchStatusUpdates()");
+		List<Status> statusList = null;
+		try {
+			statusList = getTwitter().getFriendsTimeline();
+		} catch (TwitterException e) {
+			stopService(new Intent(this,UpdaterService.class));
+			Log.e(TAG, e.toString());
+			return 0;
+		} catch (Exception e) {
+			Log.e(TAG, "other runtime exception");
+		}
+		Log.d(TAG, "between try blocks in fetchStatusUpdates()");
 		ContentValues values = new ContentValues();
 		int count = 0;
 		final long lastTime = getStatusData().getLatestStatusCreatedTime();
 		for (Status status : statusList) {
-			try{
+			try {
 				// Insert into database
 				values.clear(); // <7>
 				values.put(StatusData.C_ID, status.id);
@@ -133,11 +154,11 @@ public class YambaApplication extends Application implements
 				// db.insertOrThrow(DbHelper.TABLE, null, values); //
 				// <8>
 				statusData.insertOrIgnore(values);
-				Log.d(YambaApplication.TAG,
-						String.format("%s: %s", status.user.name, status.text));
-				if(createdAt > lastTime)
+				// Log.d(YambaApplication.TAG,
+				// String.format("%s: %s", status.user.name, status.text));
+				if (createdAt > lastTime)
 					count++;
-			}catch(RuntimeException e){
+			} catch (RuntimeException e) {
 				Log.e(TAG, e.toString());
 			}
 
@@ -150,6 +171,18 @@ public class YambaApplication extends Application implements
 	 */
 	public SharedPreferences getPrefs() {
 		return prefs;
+	}
+
+	public boolean isUpdaterServiceRunning() {
+		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager
+				.getRunningServices(Integer.MAX_VALUE)) {
+			if (UpdaterService.class.getName().equals(
+					service.service.getClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

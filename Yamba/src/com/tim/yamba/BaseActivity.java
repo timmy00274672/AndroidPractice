@@ -53,10 +53,10 @@ public class BaseActivity extends Activity {
 					.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
 			break;
 		case R.id.itemToggle:
-			if (application.getUpdaterServiceRunning()) {
-				stopService(new Intent(this, UpdaterService.class));
+			if (application.isUpdaterServiceRunning()) {
+				stopService(new Intent(this,UpdaterService.class));
 			} else {
-				startService(new Intent(this, UpdaterService.class));
+				startService(new Intent(this,UpdaterService.class));
 			}
 			break;
 		case R.id.itemPurge:
@@ -69,10 +69,14 @@ public class BaseActivity extends Activity {
 					.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
 			break;
 		case R.id.itemTimeline:
-			startActivity(new Intent(this, TimelineActivity.class)
-					.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-					.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-					);
+			startActivity(new Intent(this, TimelineActivity.class).addFlags(
+					Intent.FLAG_ACTIVITY_SINGLE_TOP).addFlags(
+					Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+			break;
+		case R.id.itemDebug:
+			Toast.makeText(this,
+					Boolean.toString(application.isUpdaterServiceRunning()),
+					Toast.LENGTH_LONG).show();
 		}
 		return true;
 
@@ -80,15 +84,15 @@ public class BaseActivity extends Activity {
 
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu) {
-		MenuItem toggleItem =menu.findItem(R.id.itemToggle);
-		if(application.getUpdaterServiceRunning()){
+		MenuItem toggleItem = menu.findItem(R.id.itemToggle);
+		if (application.isUpdaterServiceRunning()) {
 			toggleItem.setTitle(R.string.titleServiceStop);
 			toggleItem.setIcon(android.R.drawable.ic_media_pause);
-		}else{
+		} else {
 			toggleItem.setTitle(R.string.titleServiceStart);
 			toggleItem.setIcon(android.R.drawable.ic_media_play);
 		}
-		
+
 		return true;
 	}
 }

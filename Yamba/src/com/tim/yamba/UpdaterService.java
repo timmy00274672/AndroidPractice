@@ -40,7 +40,6 @@ public class UpdaterService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(UpdaterService.TAG, "in onStartCommand");
-		application.setUpdaterServiceRunning(true);
 		updater.start();
 		return super.onStartCommand(intent, flags, startId);
 
@@ -55,7 +54,6 @@ public class UpdaterService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 		Log.d(UpdaterService.TAG, "in onDestroy");
-		application.setUpdaterServiceRunning(false);
 		updater.interrupt();
 		updater = null;
 	}
@@ -76,15 +74,22 @@ public class UpdaterService extends Service {
 		 */
 		@Override
 		public void run() {
-			while (application.getUpdaterServiceRunning()) {
+			Log.d(TAG,
+					"in run "
+							+ Boolean.toString(application
+									.isUpdaterServiceRunning()));
+			while (application.isUpdaterServiceRunning()) {
 				try {
 					application.fetchStatusUpdates();
 					sleep(DELAY);
 				} catch (InterruptedException e) {
 					// e.printStackTrace();
-					application.setUpdaterServiceRunning(false);
+					// UpdaterService.this.onDestroy();
 				}
 			}
+			Log.d(TAG,"ready to leave run()");
 		}
 	}
+
+
 }
