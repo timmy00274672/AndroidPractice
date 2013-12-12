@@ -10,6 +10,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+.apt_generated/
 gen/
 local.properties
 .settings/
