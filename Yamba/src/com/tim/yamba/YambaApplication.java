@@ -29,7 +29,6 @@ public class YambaApplication extends Application implements
 	/**
 	 * Indicate whether {@link UpdaterService} is running.
 	 */
-	private boolean runBoolean = false;
 	/**
 	 * Store username, password, and apiRoot
 	 */
