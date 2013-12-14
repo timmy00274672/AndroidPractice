@@ -9,8 +9,16 @@
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.tim.yamba.updatePermission" />
+
+    <permission
+        android:name="com.tim.yamba.updatePermission"
+        android:description="@string/updatePermissionDescription"
+        android:protectionLevel="normal" >
+    </permission>
+
+
     <application
         android:name="com.tim.yamba.YambaApplication"
         android:allowBackup="true"
@@ -26,7 +34,7 @@
 	            <intent-filter>
 	                <action android:name="android.intent.action.MAIN" />
 	                <category android:name="android.intent.category.LAUNCHER" />
-	            </intent-filter>
+	            </intent-filter>
             -->
         </activity>
         <activity
@@ -51,7 +59,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
+        </receiver>
         -->
 
         <receiver android:name=".NetworkReceiver" >

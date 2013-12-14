@@ -61,6 +61,8 @@ public class BaseActivity extends Activity {
 			break;
 		case R.id.itemPurge:
 			application.getStatusData().delete();
+			Intent intent = new Intent(YambaApplication.UPDATE_PERMISSION);
+			sendBroadcast(intent,YambaApplication.UPDATE_PERMISSION);
 			Toast.makeText(this, R.string.msgAllDataPurge, Toast.LENGTH_LONG)
 					.show();
 			break;

@@ -25,6 +25,7 @@ import android.util.Log;
  */
 public class YambaApplication extends Application implements
 		OnSharedPreferenceChangeListener {
+	public static final String UPDATE_PERMISSION = "com.tim.yamba.updatePermission";
 	private static final String TAG = YambaApplication.class.getName();
 	/**
 	 * Indicate whether {@link UpdaterService} is running.
@@ -65,8 +66,8 @@ public class YambaApplication extends Application implements
 	public synchronized Twitter getTwitter() {
 		if (twitter == null) {
 			String username, password, apiRoot;
-			username = prefs.getString("username", "");
-			password = prefs.getString("password", "");
+			username = prefs.getString("username", "student");
+			password = prefs.getString("password", "password");
 			apiRoot = prefs.getString("aipRoot",
 					getString(R.string.defaultApiRoot));
 			twitter = new Twitter(username, password);

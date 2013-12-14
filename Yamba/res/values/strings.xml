@@ -23,5 +23,6 @@
 	<string name="titlePurge">Purge</string>
 	<string name="msgAllDataPurge">all messages delete</string>
 	<string name="msgSetupPrefs">please setup account first</string>
+	<string name="updatePermissionDescription">permission for updating timeline</string>
 		
 </resources>

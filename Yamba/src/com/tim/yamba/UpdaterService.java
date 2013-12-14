@@ -81,6 +81,9 @@ public class UpdaterService extends Service {
 			while (application.isUpdaterServiceRunning()) {
 				try {
 					application.fetchStatusUpdates();
+					Intent intent = new Intent(YambaApplication.UPDATE_PERMISSION);
+					sendBroadcast(intent,YambaApplication.UPDATE_PERMISSION);
+					Log.d(TAG,"after send broadcast");
 					sleep(DELAY);
 				} catch (InterruptedException e) {
 					// e.printStackTrace();

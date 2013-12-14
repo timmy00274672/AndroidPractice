@@ -1,6 +1,9 @@
 package com.tim.yamba;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.CursorAdapter;
@@ -27,6 +30,7 @@ public class TimelineActivity extends BaseActivity {
 	private static int[] TO = { R.id.textCreatedAt, R.id.textUser,
 			R.id.textText };
 	private SimpleCursorAdapter adapter;
+	private BroadcastReceiver receiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,18 @@ public class TimelineActivity extends BaseActivity {
 		Log.d(TAG, "in onResume()");
 		super.onResume();
 		setupList();
+		IntentFilter filter =new IntentFilter(YambaApplication.UPDATE_PERMISSION);
+		receiver = new TimelineReceiver();
+		registerReceiver(receiver, filter,YambaApplication.UPDATE_PERMISSION,null);
+		Log.d(TAG,"register receiver");
 
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(receiver);
+		receiver = null;
 	}
 
 	@Override
@@ -92,5 +107,16 @@ public class TimelineActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		application.getStatusData().close();
+	}
+
+	class TimelineReceiver extends BroadcastReceiver {
+		final String TAG = TimelineReceiver.class.getSimpleName();
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.d(TAG, "in onReceive()");
+			TimelineActivity.this.setupList();
+
+		}
+
 	}
 }
