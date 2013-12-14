@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import android.widget.Toast;
  */
 public class BaseActivity extends Activity {
 
+	private static final String TAG = BaseActivity.class.getSimpleName();
 	/**
 	 * share by sub-classes.
 	 */
@@ -84,8 +86,24 @@ public class BaseActivity extends Activity {
 
 	}
 
+//	@Override
+//	public boolean onMenuOpened(int featureId, Menu menu) {
+////		Log.d(TAG,menu.toString());
+////		MenuItem toggleItem = menu.findItem(R.id.itemToggle);
+////		if (application.isUpdaterServiceRunning()) {
+////			toggleItem.setTitle(R.string.titleServiceStop);
+////			toggleItem.setIcon(android.R.drawable.ic_media_pause);
+////		} else {
+////			toggleItem.setTitle(R.string.titleServiceStart);
+////			toggleItem.setIcon(android.R.drawable.ic_media_play);
+////		}
+//
+//		return true;
+//	}
+	
 	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		Log.d(TAG,menu.toString());
 		MenuItem toggleItem = menu.findItem(R.id.itemToggle);
 		if (application.isUpdaterServiceRunning()) {
 			toggleItem.setTitle(R.string.titleServiceStop);
@@ -94,7 +112,6 @@ public class BaseActivity extends Activity {
 			toggleItem.setTitle(R.string.titleServiceStart);
 			toggleItem.setIcon(android.R.drawable.ic_media_play);
 		}
-
 		return true;
 	}
 }

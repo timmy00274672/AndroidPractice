@@ -157,7 +157,7 @@ public class StatusActivity extends BaseActivity {
 				Log.d(TAG,statuses[0]);
 				return status.text;
 			} catch (TwitterException e) {
-				Log.e(StatusActivity.class.getName(), e.toString());
+				Log.e(TAG, "in doInBackgroud()");
 				e.printStackTrace();
 				return "failed to post";
 			}

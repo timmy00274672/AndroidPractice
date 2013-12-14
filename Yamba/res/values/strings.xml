@@ -4,7 +4,7 @@
     <string name="app_name">Yamba</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="titleStatus">Yamba</string>
+    <string name="titleStatus">Status Update</string>
     <string name="hintText">please enter 140 characters ^>^ </string>
     <string name="buttonUpdate">Update</string>
     <string name="initialCount">000</string>
