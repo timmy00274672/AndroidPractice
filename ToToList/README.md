@@ -1,0 +1,1 @@
+In each version, I'll generally introduce the basic knowlege.
