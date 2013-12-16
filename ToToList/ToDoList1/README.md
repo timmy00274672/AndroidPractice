@@ -47,7 +47,7 @@ In this version, I demo the most basic knowledge you must know.
     - More details on lifecycle can be found in our wiki page.
 1.  In [ToDoListActivity](src/com/tim/todolist/ToDoListActivity.java) , `setContentView(R.layout.main);` 
 	**inflate** the xml file to a view object. 
-    The file you can found in `src/layout/`. 
+    The file you can found in [res/layout/](res/layout/main.xml). 
     It's readable, and the details can be found in corresponding wiki page,
     so I don't repeat here.
     
