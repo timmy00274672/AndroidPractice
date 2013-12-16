@@ -20,7 +20,7 @@ In this version, I demo the most basic knowledge you must know.
     ``` 
     above code use the external resource. 
 	
-    You can find the resource in [res\values\string.xml](res/values/strings.xml), and the corresponding code is: 
+    You can find the resource in [res/values/string.xml](res/values/strings.xml), and the corresponding code is: 
     ```xml	
     <string name="app_name">ToDoList</string>
 	``` 
