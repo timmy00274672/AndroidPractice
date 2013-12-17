@@ -2,7 +2,7 @@ Outline:
 
 - [Overview](README.md#overview)
 - [Custom View](README.md#custom-view)
-- [Canvas](README.md#Canvas)
+- [Canvas](README.md#canvas)
 - [Paint](README.md#paint)
 - [View](README.md#view)
 - [Resource](README.md#resource)
