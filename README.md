@@ -10,6 +10,19 @@ practice item: (sorted by time)
 	Use what we learn from Yamba example to fullfil this application.
 	It's a app for bookeeping. 
 
+----
+
+Below are some example from *Professional Android 4 Application Development* 
+
 * ToDoList
 	
 	In each ToDoList version, we'll generally introduce the basic knowlege.
+
+* Compass
+
+Sequence:
+
+1. ToDoList1
+2. ToDoList2
+3. ToDoList3
+4. Compass
