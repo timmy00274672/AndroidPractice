@@ -18,4 +18,11 @@ public class ClearableEditText extends LinearLayout {
 		// Hook up the functionality
 		hookupButton();
 	}
+	
+	private void hookupButton() {
+	clearButton.setOnClickListener(new Button.OnClickListener() {
+		public void onClick(View v) {
+			editText.setText("");
+		}});
+	}
 }
