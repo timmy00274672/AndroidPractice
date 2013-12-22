@@ -5,11 +5,13 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 
 public class CompassView extends View {
 
+	private static final String TAG = CompassView.class.getSimpleName();
 	private float bearing;
 	private Paint markerPaint;
 	private Paint textPaint;
@@ -139,6 +141,9 @@ public class CompassView extends View {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
+		Log.d(TAG, String.format(
+				"in dispatchPopulateAccessibilityEvent method, type = %d",
+				event.getEventType()));
 		super.dispatchPopulateAccessibilityEvent(event);
 		if (isShown()) {
 			String bearingStr = String.valueOf(bearing);
@@ -168,6 +173,7 @@ public class CompassView extends View {
 	public void setBearing(float _bearing) {
 		bearing = _bearing;
 		sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED);
+		this.invalidate();
 	}
 
 	public float getBearing() {
