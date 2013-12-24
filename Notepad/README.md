@@ -21,4 +21,4 @@ non-function:
  
 ## Feasible Analysis
 
-Link to : [Feasible Analysis](Feasible-Analysis)
+Link to : [Feasible Analysis](Feasible-Analysis.md)
