@@ -1,13 +1,21 @@
 package com.tim.compass;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.ContextMenu;
+import android.view.DragEvent;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 public class CompassView extends View {
 
@@ -172,12 +180,176 @@ public class CompassView extends View {
 
 	public void setBearing(float _bearing) {
 		bearing = _bearing;
+		Log.d(TAG,String.format("setBearing : %s", _bearing));
 		sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED);
-		this.invalidate();
+		// this.invalidate();
 	}
 
 	public float getBearing() {
 		return bearing;
+	}
+
+	@Override
+	public AccessibilityNodeInfo createAccessibilityNodeInfo() {
+		Log.d(TAG, "AccessibilityNodeInfo");
+		return super.createAccessibilityNodeInfo();
+	}
+
+	@Override
+	protected void dispatchSetPressed(boolean pressed) {
+		Log.d(TAG, "dispatchSetPressed");
+		super.dispatchSetPressed(pressed);
+	}
+
+	@Override
+	public boolean dispatchUnhandledMove(View focused, int direction) {
+		Log.d(TAG, "dispatchUnhandledMove");
+		return super.dispatchUnhandledMove(focused, direction);
+	}
+
+	@Override
+	public boolean dispatchKeyEventPreIme(KeyEvent event) {
+		Log.d(TAG, "dispatchKeyEventPreIme");
+		return super.dispatchKeyEventPreIme(event);
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		Log.d(TAG, "dispatchKeyEvent");
+		return super.dispatchKeyEvent(event);
+	}
+
+	@Override
+	public boolean dispatchKeyShortcutEvent(KeyEvent event) {
+		Log.d(TAG, "dispatchKeyShortcutEvent");
+		return super.dispatchKeyShortcutEvent(event);
+	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent event) {
+		Log.d(TAG, "dispatchTouchEvent");
+		return super.dispatchTouchEvent(event);
+	}
+
+	@Override
+	public boolean dispatchTrackballEvent(MotionEvent event) {
+		Log.d(TAG, "dispatchTrackballEvent");
+		return super.dispatchTrackballEvent(event);
+	}
+
+	@Override
+	public boolean dispatchGenericMotionEvent(MotionEvent event) {
+		Log.d(TAG, "dispatchGenericMotionEvent");
+		return super.dispatchGenericMotionEvent(event);
+	}
+
+	@Override
+	protected boolean dispatchHoverEvent(MotionEvent event) {
+		Log.d(TAG, "dispatchHoverEvent");
+		return super.dispatchHoverEvent(event);
+	}
+
+	@Override
+	protected boolean dispatchGenericPointerEvent(MotionEvent event) {
+		Log.d(TAG, "dispatchGenericPointerEvent");
+		return super.dispatchGenericPointerEvent(event);
+	}
+
+	@Override
+	protected boolean dispatchGenericFocusedEvent(MotionEvent event) {
+		Log.d(TAG, "dispatchGenericFocusedEvent");
+		return super.dispatchGenericFocusedEvent(event);
+	}
+
+	@Override
+	public void dispatchWindowFocusChanged(boolean hasFocus) {
+		Log.d(TAG, "dispatchWindowFocusChanged");
+		super.dispatchWindowFocusChanged(hasFocus);
+	}
+
+	@Override
+	protected void dispatchVisibilityChanged(View changedView, int visibility) {
+		Log.d(TAG, "dispatchVisibilityChanged");
+		super.dispatchVisibilityChanged(changedView, visibility);
+	}
+
+	@Override
+	public void dispatchDisplayHint(int hint) {
+		Log.d(TAG, "dispatchDisplayHint");
+		super.dispatchDisplayHint(hint);
+	}
+
+	@Override
+	public void dispatchWindowVisibilityChanged(int visibility) {
+		Log.d(TAG, "dispatchWindowVisibilityChanged");
+		super.dispatchWindowVisibilityChanged(visibility);
+	}
+
+	@Override
+	public void dispatchConfigurationChanged(Configuration newConfig) {
+		Log.d(TAG, "dispatchConfigurationChanged");
+		super.dispatchConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void createContextMenu(ContextMenu menu) {
+		Log.d(TAG, "createContextMenu");
+		super.createContextMenu(menu);
+	}
+
+	@Override
+	protected void dispatchDraw(Canvas canvas) {
+		Log.d(TAG, "dispatchDraw");
+		super.dispatchDraw(canvas);
+	}
+
+	@Override
+	protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+		Log.d(TAG, "dispatchSaveInstanceState");
+		super.dispatchSaveInstanceState(container);
+	}
+
+	@Override
+	protected void dispatchRestoreInstanceState(
+			SparseArray<Parcelable> container) {
+		Log.d(TAG, "dispatchRestoreInstanceState");
+		super.dispatchRestoreInstanceState(container);
+	}
+
+	@Override
+	public void destroyDrawingCache() {
+		Log.d(TAG, "destroyDrawingCache");
+		super.destroyDrawingCache();
+	}
+
+	@Override
+	protected void dispatchSetSelected(boolean selected) {
+		Log.d(TAG, "dispatchSetSelected");
+		super.dispatchSetSelected(selected);
+	}
+
+	@Override
+	protected void dispatchSetActivated(boolean activated) {
+		Log.d(TAG, "dispatchSetActivated");
+		super.dispatchSetActivated(activated);
+	}
+
+	@Override
+	public void dispatchWindowSystemUiVisiblityChanged(int visible) {
+		Log.d(TAG, "dispatchWindowSystemUiVisiblityChanged");
+		super.dispatchWindowSystemUiVisiblityChanged(visible);
+	}
+
+	@Override
+	public void dispatchSystemUiVisibilityChanged(int visibility) {
+		Log.d(TAG, "dispatchSystemUiVisibilityChanged");
+		super.dispatchSystemUiVisibilityChanged(visibility);
+	}
+
+	@Override
+	public boolean dispatchDragEvent(DragEvent event) {
+		Log.d(TAG, "dispatchDragEvent");
+		return super.dispatchDragEvent(event);
 	}
 
 }
