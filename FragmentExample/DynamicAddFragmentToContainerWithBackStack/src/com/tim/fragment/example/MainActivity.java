@@ -62,16 +62,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				.findFragmentById(R.id.framelayout1);
 		if (articleFragment == null) {
 			Log.d(TAG, "there is no articleFragment");
-			FragmentTransaction fragmentTransaction = fragmentManager
-					.beginTransaction();
 			articleFragment = new ArticleFragment();
-			fragmentTransaction.add(R.id.framelayout1, articleFragment, "test");
-			// fragmentTransaction.addToBackStack(null);
-			fragmentTransaction.commit();
-		} else {
 			FragmentTransaction fragmentTransaction = fragmentManager
 					.beginTransaction();
-			fragmentTransaction.remove(articleFragment);
+			fragmentTransaction.add(R.id.framelayout1, articleFragment, "test");
+			fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 			fragmentTransaction.commit();
 		}
 	}
