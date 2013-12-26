@@ -44,6 +44,6 @@ Sub-projects:
 
 ## TODO Topic
 
-- Fragment without ID.
+- Fragment without UI.
 - how to use bundle in fragment
 - use retained fragment, and compare the normal one in case of changing host activity's configuration.
