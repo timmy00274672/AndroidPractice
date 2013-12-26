@@ -29,6 +29,18 @@ Sub-projects:
 
 NOTE: Now you can see the **ToDoList2**. It use above knowledge to refactor the first version.
 
+## part three
+
+Try **portrait mode**. It's very important topic, that allow app provide different UI in different orientation case.
+
+It's important to read the README file with discussion of *How to work with Fragments*.
+
+Sub-projects:
+
+- [portrait mode](PortaitMode)
+
+
+
 
 ## TODO Topic
 
