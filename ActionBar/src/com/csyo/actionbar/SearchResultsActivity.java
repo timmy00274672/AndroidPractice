@@ -20,6 +20,7 @@ public class SearchResultsActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		txtQuery = (TextView) findViewById(R.id.txtQuery);
+	
 		handleIntent(getIntent());
 	}
 
@@ -32,9 +33,8 @@ public class SearchResultsActivity extends Activity {
 	private void handleIntent(Intent intent) {
 		if(Intent.ACTION_SEARCH.equals(intent.getAction())){
 			String query = intent.getStringExtra(SearchManager.QUERY);
-			txtQuery.setText("Handling query: "+ query);
+			txtQuery.setText("Handling your query: "+ query);
 		}
 	}
-
 
 }
