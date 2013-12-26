@@ -26,7 +26,10 @@ Sub-projects:
 
 - [Interfacing Between Fragments and Activities](InterfacingBetweenFragmentsAndActivities)
 
+NOTE: Now you can see the **ToDoList2**. It use above knowledge to refactor the first version.
+
 
 ## TODO Topic
 
 - Fragment without ID.
+- how to use bundle in fragment
