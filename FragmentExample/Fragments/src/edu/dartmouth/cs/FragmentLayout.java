@@ -56,8 +56,6 @@ public class FragmentLayout extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Toast.makeText(this, "FragmentLayout: OnCreate()", Toast.LENGTH_SHORT)
-				.show();
 
 		// Sets the view. Depending on orientation it will select either
 		// res/layout/fragment_layout.xml (portrait mode) or
@@ -124,8 +122,6 @@ public class FragmentLayout extends Activity {
 			// with a fragment.
 			// The activity is a context (since Activity extends Context) .
 
-			Toast.makeText(getActivity(), "TitlesFragment:onActivityCreated",
-					Toast.LENGTH_LONG).show();
 
 			// Populate list with our static array of titles in list in the
 			// Shakespeare class
@@ -141,8 +137,6 @@ public class FragmentLayout extends Activity {
 
 			View detailsFrame = getActivity().findViewById(R.id.details);
 
-			Toast.makeText(getActivity(), "detailsFrame " + detailsFrame,
-					Toast.LENGTH_LONG).show();
 
 			// Check that a view exists and is visible
 			// A view is visible (0) on the screen; the default value.
@@ -152,8 +146,6 @@ public class FragmentLayout extends Activity {
 			mDualPane = detailsFrame != null
 					&& detailsFrame.getVisibility() == View.VISIBLE;
 
-			Toast.makeText(getActivity(), "mDualPane " + mDualPane,
-					Toast.LENGTH_LONG).show();
 
 			if (savedInstanceState != null) {
 				// Restore last state for checked position.
