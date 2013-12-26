@@ -39,11 +39,20 @@ Sub-projects:
 
 - [portrait mode](PortaitMode)
 
+## part four
 
+I refactor previous project. Implement the solution with only one activity with multiple Fragments --> **Dynamic** change.
 
+Sub-projects:
+
+- [Fragments](Fragments)
 
 ## TODO Topic
 
 - Fragment without UI.
 - how to use bundle in fragment
 - use retained fragment, and compare the normal one in case of changing host activity's configuration.
+
+## Reference
+
+- [Using Fragments in Android - Tutorial ](http://www.vogella.com/articles/AndroidFragments/article.html#tutorial_dyanmicfragments)
