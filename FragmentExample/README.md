@@ -24,7 +24,8 @@ Where your Fragment needs to **share events** with its *host Activity* (such as 
 
 Sub-projects:
 
-- [Interfacing Between Fragments and Activities](InterfacingBetweenFragmentsAndActivities)
+- [Basic](InterfacingBetweenFragmentsAndActivities2)
+- [using this knowledge to refactor previous project](InterfacingBetweenFragmentsAndActivities)
 
 NOTE: Now you can see the **ToDoList2**. It use above knowledge to refactor the first version.
 
@@ -33,3 +34,4 @@ NOTE: Now you can see the **ToDoList2**. It use above knowledge to refactor the 
 
 - Fragment without ID.
 - how to use bundle in fragment
+- use retained fragment, and compare the normal one in case of changing host activity's configuration.
