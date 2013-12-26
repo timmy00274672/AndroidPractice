@@ -41,7 +41,9 @@ Sub-projects:
 
 ## part four
 
-I refactor previous project. Implement the solution with only one activity with multiple Fragments --> **Dynamic** change.
+It's part of the sample code is available from the Android SDK Manager as part of the ApiDemos project.
+
+Someone took a [note](http://www.cs.dartmouth.edu/~campbell/cs65/lecture09/lecture09.html) for this project.
 
 Sub-projects:
 
