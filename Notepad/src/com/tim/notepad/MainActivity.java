@@ -23,21 +23,10 @@ public class MainActivity extends Activity {
 		EditFragment editFragment = new EditFragment();
 		transaction.add(R.id.frameLayoutLeft, editFragment, null);
 		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-		if (savedInstanceState != null) {
-			Log.d(TAG,"savedInstanceState != null");
-			Bundle args = new Bundle();
-			args.putString(FILENAME, savedInstanceState.getString(FILENAME));
-			editFragment.setArguments(args);
-		}
 		transaction.commit();
 		
 	}
 	
-	@Override
-	protected void onResume() {
-		
-		super.onResume();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,17 +58,4 @@ public class MainActivity extends Activity {
 		return editFragment;
 	}
 	
-	@Override
-	protected void onPause() {
-		Log.d(TAG,"onPause");
-		this.onSaveInstanceState(new Bundle());
-		super.onPause();
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		Log.d(TAG,"onSaveInstanceState");
-		super.onSaveInstanceState(outState);
-		outState.putString(FILENAME, getLeftFragment().getText());
-	}
 }
