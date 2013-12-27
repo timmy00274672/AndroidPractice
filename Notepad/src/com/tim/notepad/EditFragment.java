@@ -1,6 +1,5 @@
 package com.tim.notepad;
 
-import android.R.string;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,20 +20,20 @@ public class EditFragment extends Fragment {
 		return getEditText().getText().toString();
 	}
 
-	public void setText(String text){
+	public void setText(String text) {
 		getEditText().setText(text);
 	}
-	
+
 	private EditText getEditText() {
 		return (EditText) getView().findViewById(R.id.editText);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (getArguments() != null) {
-			
-			setText(getArguments().getString(MainActivity.FILENAME));
+			if (getArguments().getString(MainActivity.FILENAME) != null)
+				setText(getArguments().getString(MainActivity.FILENAME));
 		}
 	}
 }

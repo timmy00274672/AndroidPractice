@@ -1,9 +1,13 @@
 package com.tim.notepad;
 
+import junit.framework.Test;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,18 +19,28 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
 
 		FragmentManager fManager = getFragmentManager();
 		FragmentTransaction transaction = fManager.beginTransaction();
 		EditFragment editFragment = new EditFragment();
+		
+		Bundle args = new Bundle();
+		args.putString(FILENAME, getPreviousText());
+		editFragment.setArguments(args);	
 		transaction.add(R.id.frameLayoutLeft, editFragment, null);
 		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 		transaction.commit();
-		
+
 	}
-	
+
+
+	private String getPreviousText() {
+		return getPreferences(MODE_PRIVATE).getString(FILENAME, null);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,5 +71,21 @@ public class MainActivity extends Activity {
 				.findFragmentById(R.id.frameLayoutLeft);
 		return editFragment;
 	}
-	
+
+	@Override
+	protected void onResume() {
+		Log.d(TAG, "onResume");
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		Log.d(TAG, "onPause");
+		super.onPause();
+		
+		SharedPreferences preference = getPreferences(MODE_PRIVATE);
+		Editor editor = preference.edit();
+		editor.putString(FILENAME, getLeftFragment().getText());
+		editor.commit();
+	}
 }
