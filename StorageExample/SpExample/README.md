@@ -2,6 +2,7 @@ This is README file fro *SharedPreference*.
 
 ## Content:
 
+- Preface
 - Where
 - How
 	- Use
@@ -9,6 +10,9 @@ This is README file fro *SharedPreference*.
 	- Mode 
 - Example
 
+##Preface
+
+It's used to store primitive data.
 
 ## Where
 
