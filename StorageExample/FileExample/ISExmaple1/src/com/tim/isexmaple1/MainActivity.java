@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,13 +122,48 @@ public class MainActivity extends Activity {
 			loadFile(filename);
 			break;
 		case 2:
-			deleteFile(filename);
-			cleanButton.callOnClick();
+			deleteOk(filename);
 		default:
 			break;
 		}
 
 	}
+
+	// ask user if delete
+	private void deleteOk(final String filename) {
+		AlertDialog.Builder builder = new Builder(this);
+		builder.setTitle("Warning");
+		builder.setMessage(String.format("do you really want to remove %s",
+				filename));
+		builder.setPositiveButton(R.string.confirmYes,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						deleteFile(filename);
+					}
+
+				});
+		builder.setNegativeButton(R.string.confirmNo,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Toast.makeText(MainActivity.this, String.format("%s is not removed", filename),
+								Toast.LENGTH_LONG).show();
+					}
+				});
+		builder.show();
+	}
+
+	public boolean deleteFile(String name) {
+		super.deleteFile(name);
+		cleanButton.callOnClick();
+		Toast.makeText(MainActivity.this, String.format("%s is removed", name),
+				Toast.LENGTH_LONG).show();
+		return true;
+
+	};
 
 	private void loadFile(String filename) {
 		filenameEditText.setText(filename);

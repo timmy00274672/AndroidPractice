@@ -7,4 +7,6 @@
     <string name="dataEditTextHint">Input Your File Txt</string>
     <string name="itemLoadTitle">Load</string>
 	<string name="itemDeleteTitle">Delete</string>
+	<string name="confirmYes">YES</string>
+	<string name="confirmNo">NO</string>
 </resources>
