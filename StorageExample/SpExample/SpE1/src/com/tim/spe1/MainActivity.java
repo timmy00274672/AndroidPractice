@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	protected static final String FILENAME = MainActivity.class.getName();
 	protected static final String INPUTKEY = "KEY1";
-	Button button;
+	Button button1,button2;
 	EditText editText;
 
 	@Override
@@ -22,10 +22,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		button = (Button) findViewById(R.id.button1);
+		button1 = (Button) findViewById(R.id.button1);
+		button2 = (Button) findViewById(R.id.button2);
 		editText = (EditText) findViewById(R.id.editText1);
 
-		button.setOnClickListener(new OnClickListener() {
+		button1.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -40,6 +41,15 @@ public class MainActivity extends Activity {
 					text = "nothing stored";
 				}
 				Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+			}
+		});
+		
+		button2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String storedData = getSharedPreferences(FILENAME, MODE_PRIVATE).getString(INPUTKEY, "NOT SET");
+				Toast.makeText(MainActivity.this, storedData, Toast.LENGTH_LONG).show();
 			}
 		});
 	}
