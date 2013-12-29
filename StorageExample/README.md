@@ -10,8 +10,10 @@ There are some methods for store data:
 I'll discuss each in some demo projects which are in coresponding directory.
 
 - [SpExample][SpExample]
+- [FileExample][FileExample]
 
 [SpExample]: SpExample
+[FileExample]: FileExample
 
 [SP]: http://developer.android.com/reference/android/content/SharedPreferences.html
 [CP]: http://developer.android.com/reference/android/content/ContentProvider.html

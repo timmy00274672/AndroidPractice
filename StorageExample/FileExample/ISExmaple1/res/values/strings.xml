@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Notepad</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="filenameEditTextHint">"Please enter your filename "</string>
+    <string name="dataEditTextHint">Input Your File Txt</string>
+    <string name="itemLoadTitle">Load</string>
+	<string name="itemDeleteTitle">Delete</string>
+</resources>
