@@ -32,6 +32,8 @@ The private files are in the `files` directory within the working directory of t
 2. [Context#openFileInput][OFI](String name) 
 3. [Context#fileList()][FL]
 4. [Context#deleteFile][DF](String name)
+5. [Context#getDir][GD](String name, int mode) : Creates (or opens an existing) directory within your internal storage space.
+6. [Context#getCacheDir][GCD]() : to open a File that represents the internal directory where your application should save temporary cache files.
 
 ### Mode
 
@@ -48,3 +50,5 @@ The private files are in the `files` directory within the working directory of t
 [FL]:http://developer.android.com/reference/android/content/Context.html#fileList()
 [DF]:http://developer.android.com/reference/android/content/Context.html#deleteFile(java.lang.String)
 [OFI]:http://developer.android.com/reference/android/content/Context.html#openFileInput(java.lang.String)
+[GD]:http://developer.android.com/reference/android/content/Context.html#getDir(java.lang.String,%20int)
+[GCD]:http://developer.android.com/reference/android/content/Context.html#getCacheDir()
