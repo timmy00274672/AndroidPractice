@@ -41,19 +41,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				try {
-					FileOutputStream outputStream = openFileOutput(
-							getFileName(), MODE_PRIVATE);
-					outputStream.write(getData().getBytes());
-					outputStream.close();
-					Toast.makeText(MainActivity.this, "saved",
-							Toast.LENGTH_LONG).show();
-					Log.v(TAG, "saved");
-				} catch (FileNotFoundException e) {
-					Log.e(TAG, "FileNotFoundException");
-				} catch (IOException e) {
-					Log.e(TAG, "IOException");
-				}
+				saveInternal();
 			}
 		});
 		cleanButton.setOnClickListener(new OnClickListener() {
@@ -179,6 +167,22 @@ public class MainActivity extends Activity {
 
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
+		}
+	}
+
+	private void saveInternal() {
+		try {
+			FileOutputStream outputStream = openFileOutput(
+					getFileName(), MODE_PRIVATE);
+			outputStream.write(getData().getBytes());
+			outputStream.close();
+			Toast.makeText(MainActivity.this, "saved",
+					Toast.LENGTH_LONG).show();
+			Log.v(TAG, "saved");
+		} catch (FileNotFoundException e) {
+			Log.e(TAG, "FileNotFoundException");
+		} catch (IOException e) {
+			Log.e(TAG, "IOException");
 		}
 	}
 }
