@@ -4,6 +4,11 @@ There are some methods for store data:
 
 - [SharedPreferences][SP]
 - Files 
+	- internal
+	- external
+		- public
+		- private
+- Assets  
 - [SQLite][SQLite]
 - [Content Provider][CP]
 
