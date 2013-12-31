@@ -9,4 +9,8 @@
 	<string name="itemDeleteTitle">Delete</string>
 	<string name="confirmYes">YES</string>
 	<string name="confirmNo">NO</string>
+	<string name="fileOperationTitle">select an operation</string>
+	<string name="renameDialogTitle">Renae</string>
+	<string name="editTextNewNameHint">the new file name</string>
+	<string name="itemTest">TEST</string>
 </resources>
