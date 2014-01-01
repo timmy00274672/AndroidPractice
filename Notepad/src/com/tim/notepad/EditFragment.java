@@ -17,8 +17,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+/**
+ * This fragment represents a single note. <br>
+ * Use {@link EditFragment#FILENAME} as the argument to send filename data. <br>
+ * Use {@link EditFragment#save()} to save current edit text. <br>
+ * We retrieve the saved data from the file system in
+ * {@link #onActivityCreated(Bundle)}.
+ * 
+ * @author csyo
+ * 
+ */
 public class EditFragment extends Fragment {
 
+	/**
+	 * The key of the arguments that is used to get the user-input filename
+	 * value from {@link MainActivity} of this fragment.
+	 */
 	public static final String FILENAME = "FILENAME";
 	private static final String TAG = EditFragment.class.getSimpleName();
 	private String filename;
@@ -37,22 +51,23 @@ public class EditFragment extends Fragment {
 		return inflater.inflate(R.layout.edit_layout, container, false);
 	}
 
+	/**
+	 * Save the user-input content of current fragment into the file system
+	 * using the filename value from {@link EditFragment#FILENAME}.
+	 */
 	public void save() {
 		OutputStream os = null;
 		OutputStreamWriter writer = null;
 		try {
-
 			os = getActivity().openFileOutput(filename, Activity.MODE_PRIVATE);
 			writer = new OutputStreamWriter(os);
 			writer.write(getText());
-			// os.write(97);
 			Log.d(TAG, getText() + " saved");
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 		} finally {
 			try {
 				writer.close();
-				os.close();
 			} catch (IOException e) {
 			}
 		}
@@ -74,11 +89,12 @@ public class EditFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		FileInputStream openFileInput = null;
+		BufferedReader buffer = null;
 		try {
 			openFileInput = getActivity().openFileInput(filename);
 			Log.d(TAG, this.filename + " found");
-			InputStreamReader reader = new InputStreamReader(openFileInput);
-			BufferedReader buffer = new BufferedReader(reader);
+			buffer = new BufferedReader(new InputStreamReader(
+					openFileInput));
 			String tmp = null;
 			StringBuffer stringbuffer = new StringBuffer();
 			while ((tmp = buffer.readLine()) != null) {
@@ -89,6 +105,11 @@ public class EditFragment extends Fragment {
 		} catch (FileNotFoundException e) {
 			Log.d(TAG, " file not found");
 		} catch (IOException e) {
+		} finally {
+			try {
+				buffer.close();
+			} catch (IOException e) {
+			}
 		}
 	}
 }
