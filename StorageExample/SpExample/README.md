@@ -61,7 +61,7 @@ You can get [Editor][SPE] via [SharedPreferences#edit()][W1].
 
 ## Example
 
-### [SpE1][E1] : 
+### [SpE1][E1] : in notepad dir
 
 Test step:
 
@@ -79,7 +79,7 @@ result:
 	</map>
 
 
-[E1]: SpE1
+[E1]: ../../notepad/SpE1
 
 
 [SP]: http://developer.android.com/reference/android/content/SharedPreferences.html
