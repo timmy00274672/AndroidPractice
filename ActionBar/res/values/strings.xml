@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ActionBar</string>
-    <string name="action_settings">Settings</string>
-    <string name="mainText">ActionBar Demo</string>
-    <string name="titleSearch">Search</string>
-    <string name="titleLocationFound">Location found</string>
-    <string name="titleRefresh">Refresh</string>
-    <string name="titleHelp">Help</string>
-    <string name="title_activity_location_found">LocationFound</string>
-    <string name="title_activity_search_results">SearchResultsActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">ActionBarTabs</string>
+    <string name="test">Test</string>
     <string name="hello_world">Hello world!</string>
+    <string name="textTabOne">Tab One</string>
+    <string name="textTabTwo">Tab Two</string>
+    <string name="textTabThree">Tab Three</string>
+    <string name="addTab">New</string>
+    <string name="removeTab">Remove</string>
 
 </resources>
