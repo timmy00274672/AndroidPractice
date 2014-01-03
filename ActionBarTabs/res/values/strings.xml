@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ActionBarTabs</string>
+    <string name="test">Test</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="textTabOne">Tab One</string>
+    <string name="textTabTwo">Tab Two</string>
+    <string name="textTabThree">Tab Three</string>
+    <string name="addTab">New</string>
+    <string name="removeTab">Remove</string>
+
+</resources>
