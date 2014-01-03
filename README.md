@@ -1,6 +1,6 @@
 Projects:
 
-- [compass](compass)
+- [Compass](Compass)
 - [Notepad](Notepad)
 - [ToDoList](ToDoList)
 	- [ToDoList1](ToDoList/ToDoList1)
