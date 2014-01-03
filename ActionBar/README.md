@@ -18,3 +18,20 @@ Implement search widget in action bar.
 - `SearchResultsActivity` need to handle intent that is sent from search widget
 	- handle both in `onCreate()` and [`onNewIntent()`](http://developer.android.com/reference/android/app/Activity.html#onNewIntent%28android.content.Intent%29)
 
+## Part 3
+
+Add spinner drop-down navigation
+
+- 
+
+## Part 4
+
+Add custom views
+
+- 
+
+## Part 5
+
+Add tab navigation
+
+- 
