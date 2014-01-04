@@ -7,8 +7,8 @@ import android.util.Log;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-	private static final int MAX_TABS = 5;
 	private static final String TAG = TabsPagerAdapter.class.getSimpleName();
+	private static final int MAX_TABS = 5;
 
 	public TabsPagerAdapter(FragmentManager fm) {
 		super(fm);

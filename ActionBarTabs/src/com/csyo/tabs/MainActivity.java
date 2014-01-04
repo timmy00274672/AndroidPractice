@@ -73,6 +73,7 @@ public class MainActivity extends FragmentActivity {
 
 		if (savedInstanceState != null) {
 			tabs = savedInstanceState.getStringArrayList("TABS");
+			tabCount = savedInstanceState.getInt("tabCount");
 		}
 		if (getTabCount() == 0) {
 			Log.i(TAG, "create #0 tab");
@@ -89,6 +90,7 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putStringArrayList("TABS", tabs);
+		outState.putInt("tabCount",tabCount);
 		Log.d(TAG, "saving " + tabs.toString());
 		super.onSaveInstanceState(outState);
 	}
