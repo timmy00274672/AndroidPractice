@@ -9,7 +9,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,20 +23,19 @@ public class MainActivity extends FragmentActivity {
 	private TabsPagerAdapter mAdapter;
 	private ArrayList<String> tabs;
 	private int tabCount = 0;
-	private OnPageChangeListener pageChangeListener = new OnPageChangeListener() {
+	private SimpleOnPageChangeListener pageChangeListener = new SimpleOnPageChangeListener() {
 
 		@Override
 		public void onPageSelected(int position) {
-			actionBar.setSelectedNavigationItem(position);
+			if (position < actionBar.getTabCount()) {
+				Log.d(TAG, "swiping to #" + position + " ,tabCount=" + actionBar.getTabCount());
+				actionBar.setSelectedNavigationItem(position);
+			} else {
+				addTab();
+				actionBar.setSelectedNavigationItem(position);
+			}
 		}
 
-		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {
-		}
-
-		@Override
-		public void onPageScrollStateChanged(int arg0) {
-		}
 	};
 	private TabListener tabListener = new TabListener() {
 
@@ -71,14 +70,12 @@ public class MainActivity extends FragmentActivity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		tabs = new ArrayList<String>();
-		
+
 		if (savedInstanceState != null) {
-			Log.d(TAG, "loading... " + tabs.toString());
 			tabs = savedInstanceState.getStringArrayList("TABS");
-			Log.d(TAG, "loaded " + tabs.toString());
 		}
 		if (getTabCount() == 0) {
-			Log.i(TAG,"creat #0 tab");
+			Log.i(TAG, "create #0 tab");
 			addTab();
 		} else {
 			Log.d(TAG, "TabCount=" + getTabCount());
@@ -106,9 +103,9 @@ public class MainActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.addTab:
-			if (getTabCount() < mAdapter.getCount()) {
+			if (actionBar.getTabCount() < mAdapter.getCount())
 				addTab();
-			} else {
+			else {
 				Toast.makeText(this, "Too many tabs", Toast.LENGTH_SHORT)
 						.show();
 			}
@@ -122,9 +119,9 @@ public class MainActivity extends FragmentActivity {
 			}
 			break;
 		}
-		Log.i(TAG,"done "+tabs.toString());
+		Log.i(TAG, "done " + tabs.toString());
 		return true;
-		
+
 	}
 
 	private void addTab() {

@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class NewTab extends Fragment {
 
 	private static final String TAG = NewTab.class.getSimpleName();
-	private int position;
+	private String position;
 	
 	static NewTab newInstance(int num){
 		NewTab tab = new NewTab();
@@ -27,7 +27,8 @@ public class NewTab extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(TAG, position + " onCreate");
-		position = getArguments() != null ? getArguments().getInt("position") : 1;
+		int position = getArguments() != null ? getArguments().getInt("position") : 1;
+		this.position = Integer.toString(position);
 		super.onCreate(savedInstanceState);
 	}
 
