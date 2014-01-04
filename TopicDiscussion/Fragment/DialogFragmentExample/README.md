@@ -55,8 +55,11 @@ Note: DialogFragment own the `Dialog.setOnCancelListener` and `Dialog.setOnDismi
 		dialog.setContentView(R.layout.custom_dialog);
 	```
 
+Here is an example, [FragmentDialogAlarmActivity][FAD]
+
 [show1]:http://developer.android.com/reference/android/app/DialogFragment.html#show(android.app.FragmentManager,%20java.lang.String)
 [show2]:http://developer.android.com/reference/android/app/DialogFragment.html#show(android.app.FragmentTransaction,%20java.lang.String)
 [style/src]:style/src/com/tim/dialogfragmentexample
 [Style/MA]:style/src/com/tim/dialogfragmentexample/MainActivity.java
 [Style/MCD]:style/src/com/tim/dialogfragmentexample/MyCustomDialog.java
+[FAD]:FragmentAlertDialog/src/edu/dartmouth/cs/fragmentalertdialog/FragmentDialogAlarmActivity.java
