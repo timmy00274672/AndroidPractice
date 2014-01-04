@@ -60,23 +60,23 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		actionBar = getActionBar();
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-		tabs = new ArrayList<String>();
 
+		viewPager = (ViewPager) findViewById(R.id.pager);
+		viewPager.setAdapter(mAdapter);
+		viewPager.setOnPageChangeListener(pageChangeListener);
+
+		actionBar = getActionBar();
+		actionBar.setHomeButtonEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		tabs = new ArrayList<String>();
+		
 		if (savedInstanceState != null) {
 			Log.d(TAG, "loading... " + tabs.toString());
 			tabs = savedInstanceState.getStringArrayList("TABS");
 			Log.d(TAG, "loaded " + tabs.toString());
 		}
-
-		viewPager.setAdapter(mAdapter);
-		viewPager.setOnPageChangeListener(pageChangeListener);
-
-		actionBar.setHomeButtonEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
 		if (getTabCount() == 0) {
 			Log.i(TAG,"creat #0 tab");
 			addTab();
