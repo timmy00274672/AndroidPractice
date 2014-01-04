@@ -1,4 +1,4 @@
-This is READEME file for `SearchView`.
+This is note for `SearchView`.
 
 I use below code to dynamically add a `MenuItem` and bind a view to it. And show it in the action bar.
 
