@@ -38,11 +38,11 @@ I use this method in [MyCustomDialog#onCreate][Style/MCD], which is called befor
 
 ### onCreateDialog
 
-Override to build your own custom Dialog container. This is typically used to show an `AlertDialog` instead of a generic Dialog; when doing so, onCreateView(LayoutInflater, ViewGroup, Bundle) does not need to be implemented since the AlertDialog takes care of its own content. 
-
-This method will be called after `onCreate(Bundle)` and before `onCreateView(LayoutInflater, ViewGroup, Bundle)`. *The default implementation simply instantiates and returns a Dialog class*. 
-
-Note: DialogFragment own the `Dialog.setOnCancelListener` and `Dialog.setOnDismissListener` callbacks. You must **not** set them yourself. To find out about these events, override `onCancel(DialogInterface)` and `onDismiss(DialogInterface)`.
+> Override to build your own custom Dialog container. This is typically used to show an `AlertDialog` instead of a generic Dialog; when doing so, onCreateView(LayoutInflater, ViewGroup, Bundle) does not need to be implemented since the AlertDialog takes care of its own content. 
+> 
+> This method will be called after `onCreate(Bundle)` and before `onCreateView(LayoutInflater, ViewGroup, Bundle)`. *The default implementation simply instantiates and returns a Dialog class*. 
+> 
+> Note: DialogFragment own the `Dialog.setOnCancelListener` and `Dialog.setOnDismissListener` callbacks. You must **not** set them yourself. To find out about these events, override `onCancel(DialogInterface)` and `onDismiss(DialogInterface)`.
 
 
 
@@ -55,7 +55,45 @@ Note: DialogFragment own the `Dialog.setOnCancelListener` and `Dialog.setOnDismi
 		dialog.setContentView(R.layout.custom_dialog);
 	```
 
-Here is an example, [FragmentDialogAlarmActivity][FAD]
+Here is an example, [FragmentDialogAlarmActivity][FAD]:
+
+```java
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			int title = getArguments().getInt("title");
+
+			return new AlertDialog.Builder(getActivity())
+					.setIcon(R.drawable.alert_dialog_dart_icon)
+					.setTitle(title)
+					.setPositiveButton(R.string.alert_dialog_ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									((FragmentDialogAlarmActivity) getActivity())
+											.doPositiveClick();
+								}
+							})
+					.setNegativeButton(R.string.alert_dialog_cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									((FragmentDialogAlarmActivity) getActivity())
+											.doNegativeClick();
+								}
+							}).create();
+		}
+
+```
+
+The points:
+
+- Use `AlertDialog.Builder` to `create` the `AlertDialog` object.
+- `setIcon`
+- `setTitle`
+- `setPositiveButton`, `setNegativeButton`, `setNeutralButton`
+
+	It's good practice to use callback function in this three button's listener.
 
 [show1]:http://developer.android.com/reference/android/app/DialogFragment.html#show(android.app.FragmentManager,%20java.lang.String)
 [show2]:http://developer.android.com/reference/android/app/DialogFragment.html#show(android.app.FragmentTransaction,%20java.lang.String)
