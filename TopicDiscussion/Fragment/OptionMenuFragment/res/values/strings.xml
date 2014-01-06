@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OptionMenuFragment</string>
+    <string name="title_activity_fragment_menu">FragmentMenu</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="fragment_menu_msg">Menu1</string>
+    <string name="fragment1menu">Menu11</string>
+    <string name="fragment2menu">Menu2</string>
+
+</resources>
