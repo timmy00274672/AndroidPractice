@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FragmentContextMenu</string>
+    <string name="title_activity_fragment_context_menu">FragmentContextMenu</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="long_press">long_press</string>
+	<string name="fragment_context_menu_msg">CONTEXT_MSG</string>
+</resources>
