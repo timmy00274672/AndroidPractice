@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 
 public class FragmentMenu extends Activity {
 
+	private static final String TAG = FragmentMenu.class.getSimpleName();
 	private Fragment mFragment1;
 	private Fragment mFragment2;
 	private CheckBox mCheckBox1;
@@ -74,6 +76,13 @@ public class FragmentMenu extends Activity {
 		updateFragmentVisibility();
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Log.v(TAG, String.format("in %s, onOptionItemSelected: item=%s",
+				TAG, item.getTitle()));
+		return false;
+	}
+
 	/**
 	 * A fragment that displays a menu. This fragment happens to not have a UI
 	 * (it does not implement onCreateView), but it could also have one if it
@@ -100,7 +109,7 @@ public class FragmentMenu extends Activity {
 	 * Second fragment with a menu.
 	 */
 	public static class Menu2Fragment extends Fragment {
-
+		String TAG = Menu2Fragment.class.getSimpleName();
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -110,6 +119,13 @@ public class FragmentMenu extends Activity {
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			menu.add("Menu 2").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		}
+		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			Log.v(TAG, String.format("in %s, onOptionItemSelected: item=%s",
+					TAG, item.getTitle()));
+			return false;
 		}
 	}
 }
