@@ -8,7 +8,7 @@ import android.util.Log;
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	private static final String TAG = TabsPagerAdapter.class.getSimpleName();
-	private static final int MAX_TABS = 5;
+	private static int TOTAL_TABS = 1;
 
 	public TabsPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -16,14 +16,20 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		Log.i(TAG, "creating a new tab instance for index " + position);
-		// create a new instance for NewTab fragment
-		return NewTab.newInstance(position);
+		Log.i(TAG, "creating a new instance for index " + (position+1));
+		// create a new instance of fragment
+		return TabFragment.newInstance(position+1);
 	}
 
 	@Override
 	public int getCount() {
-		return MAX_TABS;
+		return TOTAL_TABS;
+	}
+	
+	public void setCount(int num) {
+		Log.d(TAG,"TOTAL_TABS="+num);
+		TabsPagerAdapter.TOTAL_TABS = num;
+		notifyDataSetChanged();
 	}
 
 }

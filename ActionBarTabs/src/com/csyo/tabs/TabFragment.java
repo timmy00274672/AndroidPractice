@@ -9,16 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class NewTab extends Fragment {
+public class TabFragment extends Fragment {
 
-	private static final String TAG = NewTab.class.getSimpleName();
+	private static final String TAB_POSITION = "position";
+	private static final String TAG = TabFragment.class.getSimpleName();
 	private String position;
 	
-	static NewTab newInstance(int num){
-		NewTab tab = new NewTab();
+	static TabFragment newInstance(int num){
+		TabFragment tab = new TabFragment();
 		
 		Bundle args = new Bundle();
-		args.putInt("position", num);
+		args.putInt(TAB_POSITION, num);
 		tab.setArguments(args);
 		
 		return tab;
@@ -27,7 +28,7 @@ public class NewTab extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(TAG, position + " onCreate");
-		int position = getArguments() != null ? getArguments().getInt("position") : 1;
+		int position = getArguments() != null ? getArguments().getInt(TAB_POSITION) : 1;
 		this.position = Integer.toString(position);
 		super.onCreate(savedInstanceState);
 	}
@@ -40,7 +41,7 @@ public class NewTab extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_untitled, container,
 				false);
 		TextView text = (TextView) rootView.findViewById(R.id.fragment_position);
-		text.setText("Tab position #"+position);
+		text.setText("Tab at position "+position);
 		return rootView;
 	}
 
