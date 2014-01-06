@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener {
 
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "SELECT_ITEM";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,22 @@ public class MainActivity extends FragmentActivity implements
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, fragment).commit();
 		return true;
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		// Restore the previously serialized current dropdown position.
+		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+			getActionBar().setSelectedNavigationItem(
+					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// Serialize the current dropdown position.
+		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
+				.getSelectedNavigationIndex());
 	}
 
 	public static class DummySectionFragment extends Fragment {
