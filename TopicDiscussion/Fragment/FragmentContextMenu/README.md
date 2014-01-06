@@ -1,4 +1,4 @@
-This is note for `FragmentContextMenu`.
+This is note for `FragmentContextMenu`. And this note can be found in wiki page-[Context-Menu][Mwiki/cm].
 
 ## Context Menu
 
@@ -64,5 +64,12 @@ For [example][ex1], detecting which selected item (in a ListView) spawned the Co
 	}
 ```
 
+### registerForContextMenu
+
+Registers a context menu to be shown for the given view (multiple views can show the context menu). This method will set the `View.OnCreateContextMenuListener` on the view to this fragment, so `onCreateContextMenu(ContextMenu, View, ContextMenuInfo)` will be called when it is time to show the context menu.
+
+### unregisterForContextMenu
+
 [wiki/cm]:http://en.wikipedia.org/wiki/Context_menu
 [ex1]:http://stackoverflow.com/questions/2321332/detecting-which-selected-item-in-a-listview-spawned-the-contextmenu-android
+[Mwiki/cm]:https://github.com/timmy00274672/AndroidPractice/wiki/Context-Menu
