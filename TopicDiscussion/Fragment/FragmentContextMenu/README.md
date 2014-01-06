@@ -23,6 +23,12 @@ FROM [wiki][wiki/cm]:
 
 In android, context menu is created when you long-press some the view.
 
+## Usage
+
+1. `registerForContextMenu` a view, which is long-pressed and than context menu is create (using the view's `OnCreateContextMenuListener`).
+2. override the `onCreateContextMenu` of the fragment/activity, or use `View.setOnCreateContextMenuListener` to dynamically bind the callback function
+3. override the `onContextItemSelected`.
+
 ## API
 ###  onCreateContextMenu 
 
@@ -69,6 +75,13 @@ For [example][ex1], detecting which selected item (in a ListView) spawned the Co
 Registers a context menu to be shown for the given view (multiple views can show the context menu). This method will set the `View.OnCreateContextMenuListener` on the view to this fragment, so `onCreateContextMenu(ContextMenu, View, ContextMenuInfo)` will be called when it is time to show the context menu.
 
 ### unregisterForContextMenu
+### View.setOnCreateContextMenuListener
+
+With only one function:
+
+- `abstract void 	onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)`
+
+You should set the the callback function of creating context menu with this method. `onCreateContextMenu(ContextMenu, View, ContextMenuInfo)` will be called when it is time to show the context menu.
 
 [wiki/cm]:http://en.wikipedia.org/wiki/Context_menu
 [ex1]:http://stackoverflow.com/questions/2321332/detecting-which-selected-item-in-a-listview-spawned-the-contextmenu-android
