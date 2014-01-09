@@ -32,4 +32,17 @@ Note that you should not commit the `FragmentTransaction` in these functions.
 
 ## Furture Explore
 
-In this example, you can observe the two tabs' behavior when you change the orientation. 
+In this example, you can observe the two tabs' behavior when you change the orientation, and close the app. 
+
+Observe that when you rotate the screen, the tab2 may contain the previous tab1's content.
+
+I think the reason is that I use `add`. As I use `replace` instead of `add`, the problem is gone. But why? 
+
+```java
+
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		Log.v(TAG, "onTabSelected");
+		ft.add(android.R.id.content, aFragment, null);
+	}
+
+```
