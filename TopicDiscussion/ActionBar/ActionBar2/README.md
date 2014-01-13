@@ -4,26 +4,26 @@ This is note for `ActionBar2`, which implements the same thing as `ActionBar1` i
 ## Generics Listener
 We notice that the behavior of `ActionBar.TabListener` for each Tab is almost the same, so I extract the code via **generics** `ActionBar.TabListener`.
 
-	```java
-	
-	public class MyTabListener<T extends Fragment> implements TabListener 
-	```
+```java
+
+public class MyTabListener<T extends Fragment> implements TabListener 
+```
 
 In this generics `ActionBar.TabListener`, we use the method:
 
 - Fragment.instantiate(Context context, String fname, Bundle args)
  	
-	```java
+```java
 
-	mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
-	```
+mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
+```
 
 Notice the parameters of the constrctor:
 
-	```java
+```java
 
-	MyTabListener(Activity activity, String tag, Class<T> clz, Bundle args)
-	```
+MyTabListener(Activity activity, String tag, Class<T> clz, Bundle args)
+```
 
 ## Deeper look
 
@@ -36,8 +36,7 @@ Always make sure that the state of fragment is right. Like:
 		mFragmentManager = mActivity.getFragmentManager();
 		mFragment = mFragmentManager.findFragmentByTag(mTag);
 		if (mFragment != null && !mFragment.isDetached()) {
-			FragmentTransaction transaction = mFragmentManager
-					.beginTransaction();
+			FragmentTransaction transaction = mFragmentManager.beginTransaction();
 			transaction.detach(mFragment);
 			transaction.commit();
 	```
@@ -48,8 +47,7 @@ Always make sure that the state of fragment is right. Like:
 	
 		if (mFragment == null) {
 			Log.v(TAG, "mFrag is null");
-			mFragment = Fragment
-					.instantiate(mActivity, mClass.getName(), mArgs);
+			mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
 			ft.add(android.R.id.content, mFragment, mTag);
 			Log.v(TAG, "tabselect and added");
 		} else {
