@@ -12,18 +12,18 @@ public class MyTabListener<T extends Fragment> implements TabListener
 In this generics `ActionBar.TabListener`, we use the method:
 
 - Fragment.instantiate(Context context, String fname, Bundle args)
- 	
-```java
+	 	
+	```java
+	
+	mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
+	```
 
-mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
-```
-
-Notice the parameters of the constrctor:
-
-```java
-
-MyTabListener(Activity activity, String tag, Class<T> clz, Bundle args)
-```
+- constrctor(Notice the parameters):
+	
+	```java
+	
+	MyTabListener(Activity activity, String tag, Class<T> clz, Bundle args)
+	```
 
 ## Deeper look
 
