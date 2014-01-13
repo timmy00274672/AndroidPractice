@@ -1,6 +1,5 @@
 package com.tim.actionbar2;
 
-import android.R.anim;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.Activity;
