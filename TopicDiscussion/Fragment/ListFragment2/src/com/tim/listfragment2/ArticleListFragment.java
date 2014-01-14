@@ -1,22 +1,18 @@
 package com.tim.listfragment2;
 
-import com.tim.listfragment2.MyListAdapter.MyItem;
+import java.io.File;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class ArticleListFragment extends ListFragment {
@@ -50,8 +46,7 @@ public class ArticleListFragment extends ListFragment {
 
 	}
 
-	private void showContext(int target) {
-		mPosition = target;
+	private void showContext(File item) {
 
 		getListView().setItemChecked(mPosition, true);
 
@@ -64,9 +59,11 @@ public class ArticleListFragment extends ListFragment {
 			ArticleContextFragment context = (ArticleContextFragment) fm
 					.findFragmentById(R.id.contextFragment);
 
-			if (context == null || context.getPosition() != mPosition) {
+			if (context == null
+					|| !context.getFile().toString()
+							.equals(getSelectFile().toString())) {
 				FragmentTransaction ft = fm.beginTransaction();
-				context = ArticleContextFragment.newInstance(mPosition);
+				context = ArticleContextFragment.newInstance(item);
 				ft.replace(R.id.contextFragment, context);
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 				ft.commit();
@@ -105,23 +102,23 @@ public class ArticleListFragment extends ListFragment {
 		return false;
 	}
 
-	private void test2() {
-		LayoutInflater inflater = (LayoutInflater) getActivity()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View mView = inflater.inflate(R.layout.row, getListView(), false);
-		MyItem mItem = new MyItem();
-
-		ImageView mImageView = (ImageView) mView.findViewById(R.id.imageView1);
-		mImageView.setImageResource(mItem.getmIcon());
-
-		TextView mTextView = (TextView) mView.findViewById(R.id.textView1);
-		mTextView.setText(mItem.getmText());
-
-		TextView mTimeTextView = (TextView) mView.findViewById(R.id.textView2);
-		mTimeTextView.setText(mItem.getTime().toLocaleString());
-//		Log.v(TAG, String.format("getView position is %d", position));
-		getActivity().setContentView(mView);
-	}
+	// private void test2() {
+	// LayoutInflater inflater = (LayoutInflater) getActivity()
+	// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	// View mView = inflater.inflate(R.layout.row, getListView(), false);
+	// MyItem mItem = new MyItem();
+	//
+	// ImageView mImageView = (ImageView) mView.findViewById(R.id.imageView1);
+	// mImageView.setImageResource(mItem.getmIcon());
+	//
+	// TextView mTextView = (TextView) mView.findViewById(R.id.textView1);
+	// mTextView.setText(mItem.getmText());
+	//
+	// TextView mTimeTextView = (TextView) mView.findViewById(R.id.textView2);
+	// mTimeTextView.setText(mItem.getTime().toLocaleString());
+	// // Log.v(TAG, String.format("getView position is %d", position));
+	// getActivity().setContentView(mView);
+	// }
 
 	private void test() {
 		MyListAdapter adapter = new MyListAdapter(getActivity());
@@ -130,9 +127,21 @@ public class ArticleListFragment extends ListFragment {
 		adapter.notifyDataSetChanged();
 		Log.v(TAG, String.format("Count = %d", adapter.getCount()));
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		showContext(position);
+		mPosition = position;
+		Log.v(TAG, String.format("onListItemClink, mPosition is %d", mPosition));
+		File item = getSelectFile();
+		Toast.makeText(getActivity(),
+				String.format("item(%s) selected", item.toString()),
+				Toast.LENGTH_SHORT).show();
+		showContext(item);
+	}
+
+	private File getSelectFile() {
+		Log.v(TAG,
+				String.format("in getSelectFile(), mPosition is %d", mPosition));
+		return (File) getListAdapter().getItem(mPosition);
 	}
 }
