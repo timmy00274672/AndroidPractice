@@ -1,6 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Task List</string>
     <string name="contentText">Enter the task text</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="receiver">com.csyo.tasklist.TaskReceiver</string>
 
 </resources>

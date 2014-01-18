@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -32,11 +31,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.csyo.tasklist.TaskList.Tasks;
 
 public class TaskDetailActivity extends ListActivity {
 
+	public static final String TASK_BUNDLE = "bundle";
 	public static final String TAG = TaskDetailActivity.class.getSimpleName();
 	private LayoutInflater inflater;
 	private ListView listView;
@@ -51,16 +52,18 @@ public class TaskDetailActivity extends ListActivity {
 	private static int mMinute;
 	private String content, date, time;
 	protected int on_off;
-	private int id;
+	private int _id;
 	private int alarm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Log.d(TAG, "onCreate");
+
 		final Calendar c = Calendar.getInstance();
 		mYear = c.get(Calendar.YEAR);
-		mMonth = c.get(Calendar.MONTH) + 1;
+		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 		mHour = c.get(Calendar.HOUR_OF_DAY);
 		mMinute = c.get(Calendar.MINUTE);
@@ -69,7 +72,7 @@ public class TaskDetailActivity extends ListActivity {
 
 		listView = getListView();
 		listView.setAdapter(new ViewAdapter());
-		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -87,39 +90,47 @@ public class TaskDetailActivity extends ListActivity {
 					showTimePickerDialog();
 					break;
 				case 3:
-					showContentDialog("Enter content: ");
+					showContentDialog("Enter task content: ");
 					break;
 				case 4:
 					ctvAlarm = (CheckedTextView) view;
-					if (ctvAlarm.isChecked()) {
-						alarm = 0;
-						setAlarm(false);
-					} else {
-						alarm = 1;
-						setAlarm(true);
-					}
+					alarm = ctvAlarm.isChecked() ? 1 : 0;
 					break;
 				}
 			}
 		});
 	}
 
+	/**
+	 * Set up alarm using {@link PendingIntent} to create a BroadcastReceiver. 
+	 * <br>
+	 * Notice the pending intent that  
+	 * performs the broadcast must set the receiver class 
+	 * with the intent. As a result, there is no need to set 
+	 * the action string since <intent-filter> is no use here.
+	 * 
+	 * @param flag
+	 *            true if the alarm is set; false if not
+	 */
 	protected void setAlarm(boolean flag) {
-		final String BC_ACTION = "com.csyo.tasklist.TaskReceiver";
 		final AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		Intent intent = new Intent();
-		intent.setAction(BC_ACTION);
+		// String action = getString(R.string.receiver);
+		Intent intent = new Intent(this, TaskReceiver.class);
 		intent.putExtra("msg", content);
-		final PendingIntent pi = PendingIntent.getBroadcast(
-				getApplicationContext(), 0, intent, 0);
+		final PendingIntent pending = PendingIntent.getBroadcast(this, 1,
+				intent, 0);
 		final long systemTime = System.currentTimeMillis();
 		Calendar c = Calendar.getInstance();
 		c.set(mYear, mMonth, mDay, mHour, mMinute);
 		long taskTime = c.getTimeInMillis();
-		if (flag && (taskTime - systemTime) > 0 && on_off == 1)
-			am.set(AlarmManager.RTC_WAKEUP, taskTime, pi);
-		else
-			am.cancel(pi);
+		long triggerTime = taskTime - systemTime;
+		if (flag && triggerTime > 0 && on_off == 1) {
+			am.set(AlarmManager.RTC_WAKEUP, taskTime, pending);
+			Toast.makeText(this, "Alarm set at " + c.toString(),
+					Toast.LENGTH_SHORT).show();
+		} else {
+			am.cancel(pending);
+		}
 	}
 
 	protected void showContentDialog(String msg) {
@@ -150,24 +161,25 @@ public class TaskDetailActivity extends ListActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
+		Log.d(TAG, "onResume");
 		init(getIntent());
+		super.onResume();
 	}
 
 	private void init(Intent intent) {
-		Bundle b = intent.getBundleExtra("bundle");
+		Bundle b = intent.getBundleExtra(TASK_BUNDLE);
 		if (b != null) {
-			id = b.getInt("id");
-			content = b.getString("content");
-			date = b.getString("date");
-			time = b.getString("time");
-			on_off = b.getInt("on_off");
-			alarm = b.getInt("alarm");
+			_id = b.getInt(Tasks._ID);
+			content = b.getString(Tasks.CONTENT);
+			date = b.getString(Tasks.DATE);
+			time = b.getString(Tasks.TIME);
+			on_off = b.getInt(Tasks.ON_OFF);
+			alarm = b.getInt(Tasks.ALARM);
 
 			if (date != null && date.length() > 0) {
 				String[] strs = date.split("/");
 				mYear = Integer.parseInt(strs[0]);
-				mMonth = Integer.parseInt(strs[1]);
+				mMonth = Integer.parseInt(strs[1]) - 1;
 				mDay = Integer.parseInt(strs[2]);
 			}
 
@@ -181,7 +193,8 @@ public class TaskDetailActivity extends ListActivity {
 
 	class ViewAdapter extends BaseAdapter {
 
-		String[] strs = { "ON / OFF", "Date", "Time", "Content", "Open Alarm" };
+		final String[] strs = { "ON / OFF", "Date", "Time", "Content",
+				"Open Alarm" };
 
 		@Override
 		public int getCount() {
@@ -211,13 +224,17 @@ public class TaskDetailActivity extends ListActivity {
 								null);
 				ctvOnOff.setText(strs[position]);
 				ctvOnOff.setTextSize(30);
-				ctvOnOff.setChecked(on_off == 0 ? false : true);
+				listView.setItemChecked(position, on_off == 0 ? false : true);
+				// if (on_off == 0)
+				// ctvOnOff.setChecked(false);
+				// else
+				// ctvOnOff.setChecked(true);
 				return ctvOnOff;
 			case 1:
 				dateName = name;
 				dateDesc = desc;
 				dateName.setText(strs[position]);
-				dateDesc.setText(mYear + "/" + mMonth + "/" + mDay);
+				dateDesc.setText(mYear + "/" + (mMonth + 1) + "/" + mDay);
 				return view;
 			case 2:
 				timeName = name;
@@ -238,7 +255,8 @@ public class TaskDetailActivity extends ListActivity {
 								null);
 				ctvAlarm.setText(strs[position]);
 				ctvAlarm.setTextSize(30);
-				ctvAlarm.setChecked(alarm == 0 ? false : true);
+				listView.setItemChecked(position, alarm == 0 ? false : true);
+				// ctvAlarm.setChecked(alarm == 0 ? false : true);
 				return ctvAlarm;
 			}
 			return null;
@@ -258,10 +276,9 @@ public class TaskDetailActivity extends ListActivity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			mYear = year;
-			mMonth = month + 1;
+			mMonth = month;
 			mDay = day;
-			String Date = mYear + "/" + mMonth + "/" + mDay;
-			Log.d(TAG, Date);
+			String Date = mYear + "/" + (mMonth + 1) + "/" + mDay;
 			dateDesc.setText(Date);
 		}
 	}
@@ -294,11 +311,13 @@ public class TaskDetailActivity extends ListActivity {
 		values.put(Tasks.CONTENT, contentDesc.getText().toString());
 		values.put(Tasks.DATE, dateDesc.getText().toString());
 		values.put(Tasks.TIME, timeDesc.getText().toString());
-		values.put(Tasks.ON_OFF, ctvOnOff.isChecked() ? 1 : 0);
+		int ctvOnOffInt = ctvOnOff.isChecked() ? 1 : 0;
+		values.put(Tasks.ON_OFF, ctvOnOffInt);
 		values.put(Tasks.ALARM, ctvAlarm.isChecked() ? 1 : 0);
-		if (id != 0){
-			// update
-			Uri uri = ContentUris.withAppendedId(Tasks.CONTENT_URI, id);
+
+		setAlarm(alarm == 0 ? false : true);
+		if (_id != 0) {
+			Uri uri = ContentUris.withAppendedId(Tasks.CONTENT_URI, _id);
 			getContentResolver().update(uri, values, null, null);
 		} else {
 			Uri uri = Tasks.CONTENT_URI;

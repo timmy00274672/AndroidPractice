@@ -146,7 +146,7 @@ public class TaskListProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues initValues) {
-		Log.d(TAG,"inserting data");
+		Log.d(TAG,"inserting data URI="+uri);
 		if (sUriMatcher.match(uri) != TASKS) {
 			throw new IllegalArgumentException("Wrong URI: " + uri);
 		}
