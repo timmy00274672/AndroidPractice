@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NotePadWithCP</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="descriptionFromItemPicture">This is the picture for this record</string>
+    <string name="cancelButtonTittle">CANCEL</string>
+    <string name="saveButtonTittle">SAVE</string>
+    <string name="nextButtonTittle">NEXT</string>
+    <string name="defalutTextForRow">NULL</string>
+    <string-array name="C1Defalut">
+        <item >Food</item>
+        <item >Traffic</item>
+        <item >Education</item>
+    </string-array>
+
+</resources>
